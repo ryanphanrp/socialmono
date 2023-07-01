@@ -29,7 +29,7 @@ subprojects {
     apply plugin: 'org.springframework.boot'
     apply plugin: 'io.spring.dependency-management'
 
-    if (name in ["user"]) {
+    if (name in ["user", "newsfeed"]) {
         dependencies {
             implementation project(path: ':core')
             implementation 'org.springframework.boot:spring-boot-starter-web'
