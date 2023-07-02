@@ -2,4 +2,5 @@ rootProject.name = 'socialmono'
 include 'core'
 include 'user'
 include 'newsfeed'
+include 'gateway'
 
