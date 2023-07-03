@@ -1,4 +1,4 @@
-![OAuth Starter](https://user-images.githubusercontent.com/51282340/232514817-eca661e9-2b4b-4a0a-8e67-40106c167a5a.png)
+![SocialMono Banner](https://user-images.githubusercontent.com/51282340/232514817-eca661e9-2b4b-4a0a-8e67-40106c167a5a.png)
 
 ## Description
 Learning Spring Boot and Spring Cloud, Microservice Architecture
