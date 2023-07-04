@@ -3,7 +3,7 @@ package org.ryan.application.dto;
 import org.ryan.constant.ResponseCode;
 import org.ryan.domain.entity.User;
 import org.ryan.exception.SocialMonoException;
-import org.ryan.infrastructure.UsernameValidator;
+import org.ryan.infrastructure.validator.UsernameValidator;
 
 import static org.ryan.utils.PasswordUtil.generatePassword;
 

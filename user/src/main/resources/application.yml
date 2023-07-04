@@ -15,3 +15,19 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: admin
     password: 11223344
+  rabbitmq:
+    virtual-host: fwbqbdnc
+    host: gerbil-01.rmq.cloudamqp.com
+    port: 5672
+    username: fwbqbdnc
+    password: IraMUuhVfAPyy9KSt4v1YFZgY1_QyjoO
+rabbitmq:
+  exchange:
+    name: newsfeed_exchange
+  routing:
+    key: newsfeed_routing_key
+  queue:
+    service:
+      name: user_service_queue
+    backend:
+      name: user_backend_queue

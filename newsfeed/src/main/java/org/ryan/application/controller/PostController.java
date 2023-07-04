@@ -2,6 +2,7 @@ package org.ryan.application.controller;
 
 import lombok.AllArgsConstructor;
 import org.ryan.application.dto.PostCreateDto;
+import org.ryan.application.dto.PostDetailDto;
 import org.ryan.application.dto.PostDto;
 import org.ryan.domain.PostService;
 import org.ryan.dto.ResponseDto;
@@ -23,6 +24,11 @@ public class PostController {
     @GetMapping("/{postId}")
     public ResponseDto<PostDto> getPost(@PathVariable Long postId) {
         return ResponseDto.ok(postService.getPost(postId));
+    }
+
+    @GetMapping("/{postId}/detail")
+    public ResponseDto<PostDetailDto> getDetailPost(@PathVariable Long postId) {
+        return ResponseDto.ok(postService.getDetailPost(postId));
     }
 
     @PostMapping

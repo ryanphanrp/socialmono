@@ -16,4 +16,9 @@ public class SocialMonoException extends RuntimeException {
         super(message);
         this.responseCode = ResponseCode.INTERNAL_ERROR;
     }
+
+    public SocialMonoException() {
+        super(ResponseCode.INTERNAL_ERROR.getMessage());
+        this.responseCode = ResponseCode.INTERNAL_ERROR;
+    }
 }

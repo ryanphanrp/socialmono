@@ -31,7 +31,6 @@ subprojects {
 
     if (name in ["user", "newsfeed"]) {
         dependencies {
-            implementation project(path: ':core')
             implementation 'org.springframework.boot:spring-boot-starter-web'
             testImplementation 'org.springframework.boot:spring-boot-starter-test'
         }
@@ -39,12 +38,15 @@ subprojects {
 
     if (name in ["user", "newsfeed"]) {
         dependencies {
+            implementation 'org.springframework.boot:spring-boot-starter-amqp'
+
             implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
             runtimeOnly 'com.mysql:mysql-connector-j'
         }
     }
 
     dependencies {
+        implementation project(path: ':core')
         compileOnly 'org.projectlombok:lombok'
         annotationProcessor 'org.projectlombok:lombok'
     }

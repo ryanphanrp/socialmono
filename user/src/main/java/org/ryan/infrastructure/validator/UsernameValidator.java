@@ -1,4 +1,4 @@
-package org.ryan.infrastructure;
+package org.ryan.infrastructure.validator;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
