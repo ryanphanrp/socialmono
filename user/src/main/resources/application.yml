@@ -23,9 +23,9 @@ spring:
     password: IraMUuhVfAPyy9KSt4v1YFZgY1_QyjoO
 rabbitmq:
   exchange:
-    name: newsfeed_exchange
+    name: socialmono_exchange
   routing:
-    key: newsfeed_routing_key
+    key: socialmono_routing_key
   queue:
     service:
       name: user_service_queue

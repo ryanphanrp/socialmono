@@ -3,4 +3,5 @@ include 'core'
 include 'user'
 include 'newsfeed'
 include 'gateway'
+include 'media'
 

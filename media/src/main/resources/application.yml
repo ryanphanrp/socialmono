@@ -1,0 +1,22 @@
+server:
+  port: 8090
+application:
+  amazon:
+    accessKey: AKIA4CV6QEHUKKT3AY5V
+    secretKey: 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
+  rabbitmq:
+    virtual-host: fwbqbdnc
+    host: gerbil-01.rmq.cloudamqp.com
+    port: 5672
+    username: fwbqbdnc
+    password: IraMUuhVfAPyy9KSt4v1YFZgY1_QyjoO
+rabbitmq:
+  exchange:
+    name: socialmono_exchange
+  routing:
+    key: socialmono_routing_key
+  queue:
+    service:
+      name: media_service_queue
+    backend:
+      name: media_backend_queue
