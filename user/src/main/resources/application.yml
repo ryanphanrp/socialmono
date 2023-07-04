@@ -11,7 +11,7 @@ spring:
       hibernate:
         format_sql: true
   datasource:
-    url: jdbc:mysql://socialmono.c2qn2ku5pguw.ap-southeast-2.rds.amazonaws.com:3306/socialmono?useSSL=false&serverTimezone=UTC
+    url: jdbc:mysql://socialmonodb.cwaca5wgqgam.ap-northeast-1.rds.amazonaws.com:3306/socialmonodb?useSSL=false&serverTimezone=UTC
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: admin
     password: 11223344

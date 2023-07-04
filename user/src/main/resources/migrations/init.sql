@@ -15,4 +15,4 @@ alter table users
     add column avatar_url  nvarchar(255),
     add column dob         datetime,
     add column gender      enum ('MALE', 'FEMALE'),
-    add column date_joined datetime;
+    add column date_joined datetime default now();
