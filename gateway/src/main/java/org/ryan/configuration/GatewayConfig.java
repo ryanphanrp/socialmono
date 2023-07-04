@@ -11,10 +11,10 @@ public class GatewayConfig {
     public RouteLocator myRoutes(RouteLocatorBuilder builder) {
         return builder.routes()
                 .route(p -> p
-                        .path("/user")
+                        .path("/**")
                         .uri("http://localhost:8081"))
                 .route(p -> p
-                        .path("/newsfeed")
+                        .path("/**")
                         .uri("http://localhost:8082"))
                 .build();
     }
