@@ -16,7 +16,6 @@ import java.util.Objects;
 @RequiredArgsConstructor
 public class UserService {
     private final UserDao userDao;
-    private UserCreateDto dto;
 
     public UserDetailDto getUser(String username) {
         User user = userDao.findUserByUsername(username)
@@ -25,7 +24,6 @@ public class UserService {
     }
 
     public Long createUser(UserCreateDto dto) {
-        this.dto = dto;
         User user = userDao.save(dto.toEntity());
         return user.getUserId();
     }

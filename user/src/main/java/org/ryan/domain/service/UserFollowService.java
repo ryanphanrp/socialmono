@@ -15,12 +15,6 @@ public class UserFollowService {
     private final UserFollowRepository userFollowRepository;
     private final UserFollowDao userFollowDao;
 
-    public UserFollowInfoDto getFollow(Long userId) {
-        Long following = userFollowRepository.countUserFollowsByFromUserId(userId);
-        Long follower = userFollowRepository.countUserFollowsByToUserId(userId);
-        return UserFollowInfoDto.of(following, follower);
-    }
-
     public UserFollowInfoDto getUserFollowDetail(Long userId) {
         return UserFollowInfoDto.of(userFollowDao.getUserFollowDetail(userId));
     }

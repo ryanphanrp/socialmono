@@ -8,8 +8,4 @@ public enum UserStatus {
     public static UserStatus ofDefault() {
         return NOT_VERIFIED;
     }
-
-    public boolean isActive() {
-        return this == ACTIVE;
-    }
 }
