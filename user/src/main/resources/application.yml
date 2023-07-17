@@ -3,6 +3,10 @@ server:
 spring:
   application:
     name: user-service
+  cloud:
+    consul:
+      host: localhost
+      port: 8500
   jpa:
     hibernate:
       ddl-auto: update

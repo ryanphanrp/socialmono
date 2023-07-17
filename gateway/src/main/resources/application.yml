@@ -3,3 +3,9 @@ server:
 spring:
   main:
     web-application-type: reactive
+  application:
+    name: gateway
+  cloud:
+    consul:
+      host: localhost
+      port: 8500

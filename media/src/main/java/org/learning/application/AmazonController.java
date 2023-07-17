@@ -1,15 +1,14 @@
 package org.learning.application;
 
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.learning.application.dto.CreatePresignedUrlDto;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/amazon/internal")
 public class AmazonController {
     private final AmazonS3Service amazonS3Service;
 
-    public InternalController(AmazonS3Service service) {
+    public AmazonController(AmazonS3Service service) {
         this.amazonS3Service = service;
     }
 

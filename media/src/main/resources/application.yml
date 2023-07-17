@@ -1,5 +1,12 @@
 server:
   port: 8090
+spring:
+  cloud:
+    consul:
+      host: localhost
+      port: 8500
+  application:
+    name: media-service
 application:
   amazon:
     accessKey: AKIA4CV6QEHUKKT3AY5V
