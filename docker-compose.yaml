@@ -6,3 +6,25 @@ services:
       - "8400:8400"
       - "8500:8500"
       - "8600:8600"
+  newsfeed_db:
+    image: mysql:latest
+    container_name: "newsfeed_db"
+    environment:
+      - MYSQL_ROOT_PASSWORD=11223344
+      - MYSQL_DATABASE=newsfeed_service
+    ports:
+      - "3306:3306"
+    volumes:
+      - database:/var/lib/mysql
+  user_db:
+    image: mysql:latest
+    container_name: "user_db"
+    environment:
+      - MYSQL_ROOT_PASSWORD=11223344
+      - MYSQL_DATABASE=user_service
+    ports:
+      - "3307:3306"
+    volumes:
+      - database:/var/lib/mysql
+volumes:
+  database:
