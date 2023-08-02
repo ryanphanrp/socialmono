@@ -4,6 +4,5 @@ create table if not exists posts
     content longtext not null,
     user_id bigint,
     created_at datetime,
-    updated_at datetime,
-    foreign key (user_id) references users(user_id)
+    updated_at datetime
 );

@@ -31,6 +31,7 @@ subprojects {
 
     if (name in ["user", "newsfeed", "media", "gateway"]) {
         dependencies {
+            implementation project(path: ':core')
             implementation 'org.springframework.cloud:spring-cloud-starter-consul-discovery:4.0.2'
             implementation 'org.springframework.boot:spring-boot-starter-actuator'
 
@@ -49,7 +50,6 @@ subprojects {
     }
 
     dependencies {
-        implementation project(path: ':core')
         compileOnly 'org.projectlombok:lombok'
         annotationProcessor 'org.projectlombok:lombok'
     }
