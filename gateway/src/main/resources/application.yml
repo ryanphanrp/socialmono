@@ -9,3 +9,13 @@ spring:
     consul:
       host: localhost
       port: 8500
+    gateway:
+      routes:
+        - id: user
+          uri: lb://user-service
+          predicates:
+            - Path=/user/**, /api/**
+        - id: newsfeed
+          uri: lb://newsfeed-service
+          predicates:
+            - Path=/newsfeed/**, /api/**
