@@ -15,10 +15,10 @@ spring:
       hibernate:
         format_sql: true
   datasource:
-    url: jdbc:mysql:/localhost:3306/newsfeed?useSSL=false&serverTimezone=UTC
+    url: jdbc:mysql:/localhost:3306/newsfeed_db?useSSL=false&serverTimezone=UTC
     driver-class-name: com.mysql.cj.jdbc.Driver
-    username: admin
-    password: 11223344
+    username: root
+    password: 112233
   rabbitmq:
     virtual-host: fwbqbdnc
     host: gerbil-01.rmq.cloudamqp.com

@@ -1,31 +1,41 @@
 version: "3"
 services:
-  consul:
+  consul_server:
+    container_name: consul_server
     image: consul:1.15.4
     ports:
       - "8400:8400"
       - "8500:8500"
       - "8600:8600"
+    networks:
+      - socialmono_network
   newsfeed_db:
-    container_name: newsfeeddb
+    container_name: newsfeed_db
     image: mysql:latest
     environment:
       - MYSQL_ROOT_PASSWORD=112233
-      - MYSQL_DATABASE=newsfeed
+      - MYSQL_DATABASE=newsfeed_db
     ports:
       - "3306:3306"
+    networks:
+      - socialmono_network
     volumes:
-      - newsfeedvol:/var/lib/mysql
+      - newsfeed_vol:/var/lib/mysql
   user_db:
-    container_name: userdb
+    container_name: user_db
     image: mysql:latest
     environment:
       - MYSQL_ROOT_PASSWORD=112233
-      - MYSQL_DATABASE=usersdb
+      - MYSQL_DATABASE=users_db
     ports:
       - "3307:3306"
+    networks:
+      - socialmono_network
     volumes:
-      - uservol:/var/lib/mysql
+      - user_vol:/var/lib/mysql
 volumes:
-  newsfeedvol:
-  uservol:
+  newsfeed_vol:
+  user_vol:
+networks:
+  socialmono_network:
+    driver: bridge
