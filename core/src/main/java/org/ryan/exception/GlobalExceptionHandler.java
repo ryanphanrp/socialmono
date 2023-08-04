@@ -25,7 +25,7 @@ public class GlobalExceptionHandler {
 
     @ResponseBody
     @ExceptionHandler({CustomNotFoundException.class})
-    public ResponseDto<Object> handleNotFount(HttpServletRequest req, CustomNotFoundException exp) {
+    public ResponseDto<Object> handleNotFound(HttpServletRequest req, CustomNotFoundException exp) {
         log.error("[NotFoundException]: {} - {}", req.getRequestURI(), exp.getMessage());
         return ResponseDto.error(exp.getResponseCode());
     }
