@@ -24,7 +24,7 @@ import static org.springframework.security.config.Customizer.withDefaults;
 @Configuration
 @EnableWebSecurity
 @AllArgsConstructor
-public class AppAuthConfig {
+public class GlobalSecurityConfig {
     private AuthUserService authUserService;
 
     @Bean
