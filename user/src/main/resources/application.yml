@@ -31,7 +31,13 @@ rabbitmq:
   routing:
     key: socialmono_routing_key
   queue:
-    service:
-      name: user_service_queue
-    backend:
-      name: user_backend_queue
+    newsfeed:
+      service:
+        name: user_service_queue
+      backend:
+        name: user_backend_queue
+    auth:
+      service:
+        name: auth_service_queue
+      backend:
+        name: auth_backend_queue

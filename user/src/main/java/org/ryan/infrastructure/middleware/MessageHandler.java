@@ -16,10 +16,17 @@ public class MessageHandler {
     private final UserInfoDao userInfoDao;
     private final MessageSender messageSender;
 
-    @RabbitListener(queues = "${rabbitmq.queue.service.name}")
+    @RabbitListener(queues = "${rabbitmq.queue.newsfeed.service.name}")
     public void receiveMessage(Long message) {
         log.info("Received message: {}", message);
         var userDto = userDao.findById(message).orElseThrow(SocialMonoException::new);
         messageSender.sendMessage(userDto);
+    }
+
+    @RabbitListener(queues = "${rabbitmq.queue.auth.service.name}")
+    public void receiveAuthMessage(String username) {
+        log.info("Auth - Received message: {}", username);
+        var userDto = userDao.findUserByUsername(username).orElseThrow(SocialMonoException::new);
+        messageSender.sendAuthMessage(userDto);
     }
 }

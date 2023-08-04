@@ -12,16 +12,23 @@ import org.springframework.context.annotation.Configuration;
 import java.util.Arrays;
 import java.util.List;
 
+// TODO: refactor this
 @Configuration
 public class RabbitConfig {
     @Value("${rabbitmq.exchange.name}")
     private String exchange;
 
-    @Value("${rabbitmq.queue.service.name}")
+    @Value("${rabbitmq.queue.newsfeed.service.name}")
     private String serviceQueue;
 
-    @Value("${rabbitmq.queue.backend.name}")
+    @Value("${rabbitmq.queue.newsfeed.backend.name}")
     private String backendQueue;
+
+    @Value("${rabbitmq.queue.auth.service.name}")
+    private String serviceAuthQueue;
+
+    @Value("${rabbitmq.queue.auth.backend.name}")
+    private String backendAuthQueue;
 
     @Value("${rabbitmq.routing.key}")
     private String routing;
@@ -37,12 +44,29 @@ public class RabbitConfig {
     }
 
     @Bean
+    public Queue serviceAuthQueue() {
+        return new Queue(serviceAuthQueue);
+    }
+
+    @Bean
+    public Queue backendAuthQueue() {
+        return new Queue(backendAuthQueue);
+    }
+
+
+    @Bean
     public List<Binding> binding() {
         return Arrays.asList(
                 BindingBuilder.bind(serviceQueue())
                         .to(eventExchange())
                         .with(routing).noargs(),
                 BindingBuilder.bind(backendQueue())
+                        .to(eventExchange())
+                        .with(routing).noargs(),
+                BindingBuilder.bind(backendAuthQueue())
+                        .to(eventExchange())
+                        .with(routing).noargs(),
+                BindingBuilder.bind(backendAuthQueue())
                         .to(eventExchange())
                         .with(routing).noargs()
         );
