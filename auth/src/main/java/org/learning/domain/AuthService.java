@@ -3,7 +3,9 @@ package org.learning.domain;
 import lombok.AllArgsConstructor;
 import org.learning.application.dto.LoginInfoDto;
 import org.learning.application.dto.RefreshTokenDto;
+import org.learning.application.dto.UserCreateDto;
 import org.learning.application.dto.UserLoginDto;
+import org.learning.infrastructure.middleware.MessageSender;
 import org.learning.security.TokenProvider;
 import org.springframework.stereotype.Service;
 
@@ -12,10 +14,15 @@ import org.springframework.stereotype.Service;
 public class AuthService {
     private final AuthUserService authUserService;
     private final TokenProvider tokenProvider;
+    private final MessageSender messageSender;
 
     public LoginInfoDto login(UserLoginDto dto) {
         AuthUser authUser = authUserService.loadUserByUsername(dto.username());
         return toLoginInfoDto(authUser);
+    }
+
+    public Long register(UserCreateDto dto) {
+        return messageSender.sendCreateUser(dto);
     }
 
     public LoginInfoDto refresh(RefreshTokenDto dto) {

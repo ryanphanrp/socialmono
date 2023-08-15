@@ -2,8 +2,12 @@ package org.ryan.infrastructure.middleware;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.ryan.application.dto.UserCreateDto;
+import org.ryan.application.dto.UserDetailDto;
+import org.ryan.constant.RabbitMessage;
+import org.ryan.constant.ResponseCode;
 import org.ryan.domain.dao.UserDao;
-import org.ryan.domain.dao.UserInfoDao;
+import org.ryan.domain.service.UserService;
 import org.ryan.exception.SocialMonoException;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Component;
@@ -13,20 +17,17 @@ import org.springframework.stereotype.Component;
 @AllArgsConstructor
 public class MessageHandler {
     private final UserDao userDao;
-    private final UserInfoDao userInfoDao;
-    private final MessageSender messageSender;
+    private final UserService userService;
 
-    @RabbitListener(queues = "${rabbitmq.queue.newsfeed.service.name}")
-    public void receiveMessage(Long message) {
-        log.info("Received message: {}", message);
-        var userDto = userDao.findById(message).orElseThrow(SocialMonoException::new);
-        messageSender.sendMessage(userDto);
+    @RabbitListener(queues = RabbitMessage.AUTH_REQUEST)
+    public UserDetailDto receiveAuth(String message) {
+        log.info("Received - Auth: {}", message);
+        return userService.getUser(message);
     }
 
-    @RabbitListener(queues = "${rabbitmq.queue.auth.service.name}")
-    public void receiveAuthMessage(String username) {
-        log.info("Auth - Received message: {}", username);
-        var userDto = userDao.findUserByUsername(username).orElseThrow(SocialMonoException::new);
-        messageSender.sendAuthMessage(userDto);
+    @RabbitListener(queues = RabbitMessage.REGISTER_REQUEST)
+    public Long receiveRegister(UserCreateDto request) {
+        log.info("Receive - Register: {}", request);
+        return userService.createUser(request);
     }
 }

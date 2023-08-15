@@ -1,80 +1,41 @@
 package org.ryan.infrastructure.configuration;
 
+import org.ryan.constant.RabbitMessage;
 import org.springframework.amqp.core.*;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 import org.springframework.amqp.support.converter.MessageConverter;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import java.util.Arrays;
-import java.util.List;
-
-// TODO: refactor this
 @Configuration
 public class RabbitConfig {
-    @Value("${rabbitmq.exchange.name}")
-    private String exchange;
-
-    @Value("${rabbitmq.queue.newsfeed.service.name}")
-    private String serviceQueue;
-
-    @Value("${rabbitmq.queue.newsfeed.backend.name}")
-    private String backendQueue;
-
-    @Value("${rabbitmq.queue.auth.service.name}")
-    private String serviceAuthQueue;
-
-    @Value("${rabbitmq.queue.auth.backend.name}")
-    private String backendAuthQueue;
-
-    @Value("${rabbitmq.routing.key}")
-    private String routing;
 
     @Bean
-    public Queue serviceQueue() {
-        return new Queue(serviceQueue);
+    public DirectExchange exchange() {
+        return new DirectExchange(RabbitMessage.DIRECT_EXCHANGE);
     }
 
     @Bean
-    public Queue backendQueue() {
-        return new Queue(backendQueue);
+    public Queue authQueue() {
+        return new Queue(RabbitMessage.AUTH_REQUEST);
     }
 
     @Bean
-    public Queue serviceAuthQueue() {
-        return new Queue(serviceAuthQueue);
-    }
-
-    @Bean
-    public Queue backendAuthQueue() {
-        return new Queue(backendAuthQueue);
+    public Queue registerQueue() {
+        return new Queue(RabbitMessage.REGISTER_REQUEST);
     }
 
 
     @Bean
-    public List<Binding> binding() {
-        return Arrays.asList(
-                BindingBuilder.bind(serviceQueue())
-                        .to(eventExchange())
-                        .with(routing).noargs(),
-                BindingBuilder.bind(backendQueue())
-                        .to(eventExchange())
-                        .with(routing).noargs(),
-                BindingBuilder.bind(backendAuthQueue())
-                        .to(eventExchange())
-                        .with(routing).noargs(),
-                BindingBuilder.bind(backendAuthQueue())
-                        .to(eventExchange())
-                        .with(routing).noargs()
-        );
+    public Binding authBinding(Queue authQueue, DirectExchange exchange) {
+        return BindingBuilder.bind(authQueue).to(exchange).with(RabbitMessage.AUTH_ROUTING_KEY);
     }
 
     @Bean
-    public Exchange eventExchange() {
-        return new TopicExchange(exchange);
+    public Binding registerBinding(Queue registerQueue, DirectExchange exchange) {
+        return BindingBuilder.bind(registerQueue).to(exchange).with(RabbitMessage.REGISTER_ROUTING_KEY);
     }
 
     @Bean

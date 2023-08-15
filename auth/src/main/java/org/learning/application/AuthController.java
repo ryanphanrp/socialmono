@@ -3,6 +3,7 @@ package org.learning.application;
 import lombok.AllArgsConstructor;
 import org.learning.application.dto.LoginInfoDto;
 import org.learning.application.dto.RefreshTokenDto;
+import org.learning.application.dto.UserCreateDto;
 import org.learning.application.dto.UserLoginDto;
 import org.learning.domain.AuthService;
 import org.ryan.dto.ResponseDto;
@@ -20,6 +21,11 @@ public class AuthController {
     @PostMapping("/login")
     public ResponseDto<LoginInfoDto> login(@RequestBody UserLoginDto dto) {
         return ResponseDto.ok(authService.login(dto));
+    }
+
+    @PostMapping("/register")
+    public ResponseDto<Long> register(@RequestBody UserCreateDto dto) {
+        return ResponseDto.ok(authService.register(dto));
     }
 
     @PostMapping("/refresh")
