@@ -1,6 +1,6 @@
 package org.ryan.constant;
 
-public class RabbitMessage {
+public final class RabbitMessage {
     public static final String DIRECT_EXCHANGE = "rpc.exchange";
 
     public static final String AUTH_ROUTING_KEY = "auth.routing.key";
