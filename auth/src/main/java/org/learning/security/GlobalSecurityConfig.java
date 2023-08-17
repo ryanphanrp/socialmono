@@ -29,7 +29,14 @@ public class GlobalSecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http.csrf(AbstractHttpConfigurer::disable).cors(withDefaults()).authorizeHttpRequests(auth -> auth.requestMatchers(new AntPathRequestMatcher("/auth/**")).permitAll().anyRequest().authenticated());
+        http.csrf(AbstractHttpConfigurer::disable)
+                .cors(withDefaults())
+                .authorizeHttpRequests(auth ->
+                        auth.requestMatchers(
+                                new AntPathRequestMatcher("/auth/**"),
+                                new AntPathRequestMatcher("/actuator/health")
+                        ).permitAll().anyRequest().authenticated()
+                );
         return http.build();
     }
 

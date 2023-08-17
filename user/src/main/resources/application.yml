@@ -25,6 +25,14 @@ spring:
     port: 5672
     username: fwbqbdnc
     password: IraMUuhVfAPyy9KSt4v1YFZgY1_QyjoO
+    listener:
+      simple:
+        retry:
+          enabled: true
+          initial-interval: 3
+          max-attempts: 6
+          max-interval: 10s
+          multiplier: 2
 rabbitmq:
   exchange:
     name: socialmono_exchange

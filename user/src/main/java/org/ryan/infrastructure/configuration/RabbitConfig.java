@@ -19,12 +19,32 @@ public class RabbitConfig {
 
     @Bean
     public Queue authQueue() {
-        return new Queue(RabbitMessage.AUTH_REQUEST);
+        return QueueBuilder.durable(RabbitMessage.AUTH_REQUEST)
+                .deadLetterExchange(RabbitMessage.DEAD_LETTER_EXCHANGE)
+                .deadLetterRoutingKey(RabbitMessage.DEAD_LETTER_ROUTING)
+                .build();
     }
 
     @Bean
     public Queue registerQueue() {
         return new Queue(RabbitMessage.REGISTER_REQUEST);
+    }
+
+
+    /* Dead Letter */
+    @Bean
+    FanoutExchange deadLetterExchange() {
+        return new FanoutExchange(RabbitMessage.DEAD_LETTER_EXCHANGE);
+    }
+
+    @Bean
+    Queue deadLetterQueue() {
+        return QueueBuilder.durable(RabbitMessage.DEAD_LETTER_QUEUE).build();
+    }
+
+    @Bean
+    Binding deadLetterBinding() {
+        return BindingBuilder.bind(deadLetterQueue()).to(deadLetterExchange());
     }
 
 

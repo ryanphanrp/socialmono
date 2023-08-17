@@ -8,4 +8,9 @@ public final class RabbitMessage {
 
     public static final String REGISTER_ROUTING_KEY = "register.routing.key";
     public static final String REGISTER_REQUEST = "register.request";
+
+    /* Dead Letter */
+    public static final String DEAD_LETTER_EXCHANGE = "dead.exchange";
+    public static final String DEAD_LETTER_QUEUE = "dead.queue";
+    public static final String DEAD_LETTER_ROUTING = "dead.routing";
 }

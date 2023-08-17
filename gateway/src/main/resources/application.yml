@@ -19,3 +19,7 @@ spring:
           uri: lb://newsfeed-service
           predicates:
             - Path=/newsfeed/**, /api/**
+        - id: auth
+          uri: lb://auth-service
+          predicates:
+            - Path=/auth/**, /**

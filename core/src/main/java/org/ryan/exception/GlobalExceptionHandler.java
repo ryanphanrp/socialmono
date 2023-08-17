@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import java.sql.SQLException;
+
 @Slf4j
 @RestControllerAdvice
 public class GlobalExceptionHandler {
@@ -25,12 +27,13 @@ public class GlobalExceptionHandler {
 
     @ResponseBody
     @ExceptionHandler({CustomNotFoundException.class})
+    @ResponseStatus(HttpStatus.NOT_FOUND)
     public ResponseDto<Object> handleNotFound(HttpServletRequest req, CustomNotFoundException exp) {
         log.error("[NotFoundException]: {} - {}", req.getRequestURI(), exp.getMessage());
         return ResponseDto.error(exp.getResponseCode());
     }
 
-    @ExceptionHandler({Exception.class})
+    @ExceptionHandler({Exception.class, SQLException.class})
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ResponseBody
     public ResponseDto<Object> handleUncaughtException(Exception exp) {
