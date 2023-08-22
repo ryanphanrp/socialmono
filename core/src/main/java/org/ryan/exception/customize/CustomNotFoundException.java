@@ -10,4 +10,8 @@ public class CustomNotFoundException extends SocialMonoException {
     public CustomNotFoundException() {
         super(ResponseCode.NOT_FOUND);
     }
+
+    public CustomNotFoundException(String message) {
+        super(ResponseCode.NOT_FOUND, message);
+    }
 }

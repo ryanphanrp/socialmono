@@ -7,22 +7,29 @@ import org.ryan.application.dto.UserDetailDto;
 import org.ryan.constant.RabbitMessage;
 import org.ryan.constant.ResponseCode;
 import org.ryan.domain.dao.UserDao;
+import org.ryan.domain.entity.User;
 import org.ryan.domain.service.UserService;
-import org.ryan.exception.SocialMonoException;
+import org.ryan.dto.RpcResponse;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Component;
+
+import java.util.Optional;
 
 @Slf4j
 @Component
 @AllArgsConstructor
 public class MessageHandler {
-    private final UserDao userDao;
     private final UserService userService;
+    private final UserDao userDao;
 
     @RabbitListener(queues = RabbitMessage.AUTH_REQUEST)
-    public UserDetailDto receiveAuth(String message) {
+    public RpcResponse<UserDetailDto> receiveAuth(String message) {
         log.info("Received - Auth: {}", message);
-        return userService.getUser(message);
+        Optional<User> user = userDao.findUserByUsername(message);
+        if (user.isEmpty()) {
+            return RpcResponse.error(ResponseCode.NOT_FOUND);
+        }
+        return RpcResponse.ok(userService.getUser(message));
     }
 
     @RabbitListener(queues = RabbitMessage.REGISTER_REQUEST)
