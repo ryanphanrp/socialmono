@@ -19,11 +19,11 @@ public class AuthFilter extends AbstractGatewayFilterFactory<Object> {
     @Override
     public GatewayFilter apply(Object object) {
         return (exchange, chain) -> {
-            log.info("AuthenticationFilter");
+            log.info("AuthenticationFilter - GatewayFilter");
             ServerHttpRequest request = exchange.getRequest();
             if (!hasAuthorization(request)) {
                 log.error("Unauthorized - No Token");
-                return onError(exchange, HttpStatus.UNAUTHORIZED);
+                return onError(exchange, HttpStatus.BAD_REQUEST);
             }
             var token = getAuthHeader(request);
             if (JwtUtil.isInValid(token)) {
@@ -38,7 +38,7 @@ public class AuthFilter extends AbstractGatewayFilterFactory<Object> {
     }
 
     private String getAuthHeader(ServerHttpRequest request) {
-        return request.getHeaders().getOrEmpty("Authorization").get(0);
+        return request.getHeaders().getOrEmpty(HttpHeaders.AUTHORIZATION).get(0);
     }
 
     private Mono<Void> onError(ServerWebExchange exchange, HttpStatus httpStatus) {
