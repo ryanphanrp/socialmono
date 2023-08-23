@@ -23,13 +23,12 @@ public class AuthFilter extends AbstractGatewayFilterFactory<Object> {
             ServerHttpRequest request = exchange.getRequest();
             if (!hasAuthorization(request)) {
                 log.error("Unauthorized - No Token");
-                return onError(exchange, "Unauthorized", HttpStatus.UNAUTHORIZED);
+                return onError(exchange, HttpStatus.UNAUTHORIZED);
             }
             var token = getAuthHeader(request);
             if (JwtUtil.isInValid(token)) {
-                return onError(exchange, "Unauthorized", HttpStatus.UNAUTHORIZED);
+                return onError(exchange, HttpStatus.UNAUTHORIZED);
             }
-
             return chain.filter(exchange);
         };
     }
@@ -42,7 +41,7 @@ public class AuthFilter extends AbstractGatewayFilterFactory<Object> {
         return request.getHeaders().getOrEmpty("Authorization").get(0);
     }
 
-    private Mono<Void> onError(ServerWebExchange exchange, String err, HttpStatus httpStatus) {
+    private Mono<Void> onError(ServerWebExchange exchange, HttpStatus httpStatus) {
         ServerHttpResponse response = exchange.getResponse();
         response.setStatusCode(httpStatus);
         return response.setComplete();

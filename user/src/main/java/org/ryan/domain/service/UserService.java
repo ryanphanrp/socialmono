@@ -8,6 +8,7 @@ import org.ryan.domain.dao.UserDao;
 import org.ryan.domain.entity.User;
 import org.ryan.exception.customize.CustomNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Objects;
@@ -23,6 +24,7 @@ public class UserService {
         return UserDetailDto.of(user);
     }
 
+    @Transactional
     public Long createUser(UserCreateDto dto) {
         User user = userDao.save(dto.toEntity());
         return user.getUserId();
@@ -35,6 +37,7 @@ public class UserService {
                 .toList();
     }
 
+    @Transactional
     public void activateUserBy(String username) {
         User user = userDao.findUserByUsername(username)
                 .orElseThrow(CustomNotFoundException::new);

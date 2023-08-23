@@ -25,11 +25,9 @@ public class MessageHandler {
     @RabbitListener(queues = RabbitMessage.AUTH_REQUEST)
     public RpcResponse<UserDetailDto> receiveAuth(String message) {
         log.info("Received - Auth: {}", message);
-        Optional<User> user = userDao.findUserByUsername(message);
-        if (user.isEmpty()) {
-            return RpcResponse.error(ResponseCode.NOT_FOUND);
-        }
-        return RpcResponse.ok(userService.getUser(message));
+        Optional<User> userOpt = userDao.findUserByUsername(message);
+        return userOpt.map(user -> RpcResponse.ok(UserDetailDto.of(user)))
+                      .orElseGet(() -> RpcResponse.error(ResponseCode.NOT_FOUND));
     }
 
     @RabbitListener(queues = RabbitMessage.REGISTER_REQUEST)
