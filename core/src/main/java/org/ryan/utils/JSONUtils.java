@@ -2,16 +2,15 @@ package org.ryan.utils;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 @Slf4j
 @Component
+@UtilityClass
 public class JSONUtils {
     private static final ObjectMapper objectMapper = new ObjectMapper();
-
-    private JSONUtils() {
-    }
 
     public static<R> R parse(String json, Class<R> clazz) {
         try {

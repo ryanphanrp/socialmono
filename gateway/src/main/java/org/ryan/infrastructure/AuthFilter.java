@@ -1,6 +1,8 @@
 package org.ryan.infrastructure;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.ryan.constant.GlobalConstant;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFactory;
 import org.springframework.http.HttpHeaders;
@@ -14,7 +16,9 @@ import reactor.core.publisher.Mono;
 
 @Slf4j
 @Component
+@RequiredArgsConstructor
 public class AuthFilter extends AbstractGatewayFilterFactory<Object> {
+    private final JwtUtil jwtUtil;
 
     @Override
     public GatewayFilter apply(Object object) {
@@ -26,9 +30,12 @@ public class AuthFilter extends AbstractGatewayFilterFactory<Object> {
                 return onError(exchange, HttpStatus.BAD_REQUEST);
             }
             var token = getAuthHeader(request);
-            if (JwtUtil.isInValid(token)) {
+            if (!jwtUtil.isValid(token)) {
                 return onError(exchange, HttpStatus.UNAUTHORIZED);
             }
+            exchange.getRequest().mutate()
+                    .header(GlobalConstant.USER_HEADER, jwtUtil.getUsernameFromToken(token))
+                    .build();
             return chain.filter(exchange);
         };
     }
