@@ -8,14 +8,6 @@ import java.io.Serializable;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public record RpcResponse<T>(Boolean status, String message, T body) implements Serializable {
 
-    public RpcResponse(String message) {
-        this(false, message, null);
-    }
-
-    public RpcResponse(T body) {
-        this(true, null, body);
-    }
-
     public boolean isError() {
         return Boolean.FALSE.equals(status);
     }
