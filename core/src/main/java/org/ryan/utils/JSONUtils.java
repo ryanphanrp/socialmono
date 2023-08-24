@@ -7,7 +7,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 @Slf4j
-@Component
 @UtilityClass
 public class JSONUtils {
     private static final ObjectMapper objectMapper = new ObjectMapper();
@@ -16,7 +15,6 @@ public class JSONUtils {
         try {
             return objectMapper.readValue(json, clazz);
         } catch (Exception ex) {
-            ex.printStackTrace();
             log.error("Parse object of class {} failed, json: {}, reason: {}", clazz.getName(), json, ex.getMessage());
             return null;
         }
@@ -26,7 +24,6 @@ public class JSONUtils {
         try {
             return objectMapper.readValue(json, typeReference);
         } catch (Exception ex) {
-            ex.printStackTrace();
             log.error("Parse object of class {} failed, json: {}, reason: {}",
                     typeReference.getClass().getName(), json, ex.getMessage());
             return null;
@@ -37,7 +34,6 @@ public class JSONUtils {
         try {
             return objectMapper.writeValueAsString(object);
         } catch (Exception ex) {
-            ex.printStackTrace();
             log.error("Stringify object of class {} failed, reason: {}", object.getClass().getName(), ex.getMessage());
             return null;
         }
