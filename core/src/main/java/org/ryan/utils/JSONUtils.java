@@ -4,14 +4,13 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Component;
 
 @Slf4j
 @UtilityClass
 public class JSONUtils {
     private static final ObjectMapper objectMapper = new ObjectMapper();
 
-    public static<R> R parse(String json, Class<R> clazz) {
+    public static <R> R parse(String json, Class<R> clazz) {
         try {
             return objectMapper.readValue(json, clazz);
         } catch (Exception ex) {
@@ -20,12 +19,11 @@ public class JSONUtils {
         }
     }
 
-    public static<R> R parse(String json, TypeReference<R> typeReference) {
+    public static <R> R parse(String json, TypeReference<R> typeReference) {
         try {
             return objectMapper.readValue(json, typeReference);
         } catch (Exception ex) {
-            log.error("Parse object of class {} failed, json: {}, reason: {}",
-                    typeReference.getClass().getName(), json, ex.getMessage());
+            log.error("Parse object of class {} failed, json: {}, reason: {}", typeReference.getClass().getName(), json, ex.getMessage());
             return null;
         }
     }
