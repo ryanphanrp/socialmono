@@ -15,10 +15,14 @@ spring:
           uri: lb://user-service
           predicates:
             - Path=/user/**, /api/**
+          filters:
+            - AuthFilter
         - id: newsfeed
           uri: lb://newsfeed-service
           predicates:
             - Path=/newsfeed/**, /api/**
+          filters:
+            - AuthFilter
         - id: auth
           uri: lb://auth-service
           predicates:

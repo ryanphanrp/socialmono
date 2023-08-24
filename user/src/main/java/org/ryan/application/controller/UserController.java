@@ -3,6 +3,7 @@ package org.ryan.application.controller;
 import lombok.AllArgsConstructor;
 import org.ryan.application.dto.UserCreateDto;
 import org.ryan.application.dto.UserDetailDto;
+import org.ryan.constant.GlobalConstant;
 import org.ryan.domain.service.UserService;
 import org.ryan.dto.ResponseDto;
 import org.springframework.web.bind.annotation.*;
@@ -30,8 +31,8 @@ public class UserController {
         return ResponseDto.ok(userService.createUser(dto));
     }
 
-    @PostMapping("/{username}/activate")
-    public ResponseDto<Object> activateUser(@PathVariable String username) {
+    @PostMapping("/activate")
+    public ResponseDto<Object> activateUser(@RequestHeader(GlobalConstant.USER_HEADER) String username) {
         userService.activateUserBy(username);
         return ResponseDto.ok();
     }
