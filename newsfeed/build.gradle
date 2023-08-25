@@ -1,6 +1,3 @@
-import org.flywaydb.gradle.task.FlywayMigrateTask
-import org.flywaydb.gradle.task.FlywayValidateTask
-
 buildscript {
     repositories {
         mavenCentral()
@@ -40,16 +37,4 @@ flyway {
     locations = ['classpath:migration']
 }
 flywayMigrate.dependsOn classes
-
-tasks.register('flywayMigrateTask', FlywayMigrateTask) {
-    dependsOn flywayMigrate
-}
-
-tasks.register('flywayValidateTask', FlywayValidateTask) {
-    dependsOn flywayValidate
-}
-
-bootRun {
-    dependsOn flywayMigrateTask, flywayValidateTask
-}
 

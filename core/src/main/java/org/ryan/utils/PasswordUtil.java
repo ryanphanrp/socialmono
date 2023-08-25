@@ -1,8 +1,11 @@
 package org.ryan.utils;
 
+import lombok.experimental.UtilityClass;
+
 import java.security.SecureRandom;
 import java.util.stream.Collectors;
 
+@UtilityClass
 public class PasswordUtil {
     private static final int DEFAULT_LENGTH = 10;
     private static final String LOWER = "abcdefghijklmnopqrstuvwxyz";
@@ -10,10 +13,6 @@ public class PasswordUtil {
     private static final String NUMBER = "0123456789";
     private static final String OTHER = "!@#$%&*()_+-=[]?";
     private static final String BASE = LOWER + UPPER + NUMBER + OTHER;
-
-    private PasswordUtil() {
-        throw new IllegalStateException("Utility class");
-    }
 
     public static String generatePassword() {
         return generatePassword(DEFAULT_LENGTH);

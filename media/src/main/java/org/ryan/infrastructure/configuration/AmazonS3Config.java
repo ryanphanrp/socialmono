@@ -1,4 +1,4 @@
-package org.learning.infrastructure.configuration;
+package org.ryan.infrastructure.configuration;
 
 import com.amazonaws.auth.AWSCredentials;
 import com.amazonaws.auth.AWSStaticCredentialsProvider;

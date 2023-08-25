@@ -1,11 +1,14 @@
 package org.ryan.utils;
 
+import lombok.experimental.UtilityClass;
+
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
 import java.util.Objects;
 
+@UtilityClass
 public class DateTimeUtil {
     private static final String ZONE_ID = "UTC";
 

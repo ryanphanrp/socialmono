@@ -1,56 +1,61 @@
 package org.ryan.infrastructure.configuration;
 
+import org.ryan.constant.RabbitMessage;
 import org.springframework.amqp.core.*;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 import org.springframework.amqp.support.converter.MessageConverter;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import java.util.Arrays;
-import java.util.List;
-
 @Configuration
 public class RabbitConfig {
-    @Value("${rabbitmq.exchange.name}")
-    private String exchange;
-
-    @Value("${rabbitmq.queue.service.name}")
-    private String serviceQueue;
-
-    @Value("${rabbitmq.queue.backend.name}")
-    private String backendQueue;
-
-    @Value("${rabbitmq.routing.key}")
-    private String routing;
 
     @Bean
-    public Queue serviceQueue() {
-        return new Queue(serviceQueue);
+    public DirectExchange exchange() {
+        return new DirectExchange(RabbitMessage.DIRECT_EXCHANGE);
     }
 
     @Bean
-    public Queue backendQueue() {
-        return new Queue(backendQueue);
+    public Queue authQueue() {
+        return QueueBuilder.durable(RabbitMessage.AUTH_REQUEST)
+                .deadLetterExchange(RabbitMessage.DEAD_LETTER_EXCHANGE)
+                .deadLetterRoutingKey(RabbitMessage.DEAD_LETTER_ROUTING)
+                .build();
     }
 
     @Bean
-    public List<Binding> binding() {
-        return Arrays.asList(
-                BindingBuilder.bind(serviceQueue())
-                        .to(eventExchange())
-                        .with(routing).noargs(),
-                BindingBuilder.bind(backendQueue())
-                        .to(eventExchange())
-                        .with(routing).noargs()
-        );
+    public Queue registerQueue() {
+        return new Queue(RabbitMessage.REGISTER_REQUEST);
+    }
+
+
+    /* Dead Letter */
+    @Bean
+    FanoutExchange deadLetterExchange() {
+        return new FanoutExchange(RabbitMessage.DEAD_LETTER_EXCHANGE);
     }
 
     @Bean
-    public Exchange eventExchange() {
-        return new TopicExchange(exchange);
+    Queue deadLetterQueue() {
+        return QueueBuilder.durable(RabbitMessage.DEAD_LETTER_QUEUE).build();
+    }
+
+    @Bean
+    Binding deadLetterBinding() {
+        return BindingBuilder.bind(deadLetterQueue()).to(deadLetterExchange());
+    }
+
+
+    @Bean
+    public Binding authBinding(Queue authQueue, DirectExchange exchange) {
+        return BindingBuilder.bind(authQueue).to(exchange).with(RabbitMessage.AUTH_ROUTING_KEY);
+    }
+
+    @Bean
+    public Binding registerBinding(Queue registerQueue, DirectExchange exchange) {
+        return BindingBuilder.bind(registerQueue).to(exchange).with(RabbitMessage.REGISTER_ROUTING_KEY);
     }
 
     @Bean

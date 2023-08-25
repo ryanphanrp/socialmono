@@ -1,6 +1,6 @@
-package org.learning.application;
+package org.ryan.application;
 
-import org.learning.application.dto.CreatePresignedUrlDto;
+import org.ryan.application.dto.CreatePresignedUrlDto;
 import org.springframework.web.bind.annotation.*;
 
 @RestController

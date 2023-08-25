@@ -1,4 +1,4 @@
-package org.learning.infrastructure.configuration;
+package org.ryan.infrastructure.configuration;
 
 import org.springframework.context.annotation.Configuration;
 

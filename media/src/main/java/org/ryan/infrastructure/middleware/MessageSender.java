@@ -1,4 +1,4 @@
-package org.learning.infrastructure.middleware;
+package org.ryan.infrastructure.middleware;
 
 import org.springframework.stereotype.Component;
 
