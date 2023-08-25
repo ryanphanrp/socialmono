@@ -51,6 +51,16 @@ public class AuthFilter extends AbstractGatewayFilterFactory<Object> {
         };
     }
 
+    private Mono<Void> onError(ServerWebExchange exchange, HttpStatus httpStatus) {
+        ServerHttpResponse response = exchange.getResponse();
+        response.setStatusCode(httpStatus);
+        response.getHeaders().setContentType(MediaType.APPLICATION_JSON);
+        String content = Optional.ofNullable(JSONUtils.stringify(ResponseDto.error(ResponseCode.UNAUTHORIZED)))
+                                 .orElse("");
+        return response.writeWith(Mono.just(content)
+                                      .map(b -> response.bufferFactory().wrap(b.getBytes(StandardCharsets.UTF_8))));
+    }
+
     private boolean hasAuthorization(ServerHttpRequest request) {
         return request.getHeaders().containsKey(HttpHeaders.AUTHORIZATION);
     }
@@ -62,15 +72,4 @@ public class AuthFilter extends AbstractGatewayFilterFactory<Object> {
         }
         return null;
     }
-
-    private Mono<Void> onError(ServerWebExchange exchange, HttpStatus httpStatus) {
-        ServerHttpResponse response = exchange.getResponse();
-        response.setStatusCode(httpStatus);
-        response.getHeaders().setContentType(MediaType.APPLICATION_JSON);
-        String content = Optional.ofNullable(JSONUtils.stringify(ResponseDto.error(ResponseCode.UNAUTHORIZED)))
-                                 .orElse("");
-        return response.writeWith(Mono.just(content)
-                                      .map(b -> response.bufferFactory().wrap(b.getBytes(StandardCharsets.UTF_8))));
-    }
-
 }
