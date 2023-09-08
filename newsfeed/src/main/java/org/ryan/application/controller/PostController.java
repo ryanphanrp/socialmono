@@ -12,7 +12,7 @@ import java.util.List;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping("/api/post")
+@RequestMapping("/newsfeed/post")
 public class PostController {
     private final PostService postService;
 
