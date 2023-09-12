@@ -33,6 +33,5 @@ flyway {
     url = "jdbc:mysql://localhost:3307/users_db"
     user = 'root'
     password = '112233'
-    locations = ['classpath:migration']
+    baselineOnMigrate = true
 }
-flywayMigrate.dependsOn classes
