@@ -18,7 +18,7 @@ import java.security.NoSuchAlgorithmException;
 import java.util.List;
 
 @RestController
-@RequestMapping("/minio/")
+@RequestMapping("/media/")
 public class MinioController {
     private final MinioService minioService;
 

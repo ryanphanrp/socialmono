@@ -12,15 +12,22 @@ spring:
     discovery:
       enabled: true
     gateway:
+      discovery:
+        locator:
+          enabled: true
       routes:
-        - id: user
-          uri: lb://user-service
-          predicates:
-            - Path=/**
         - id: newsfeed
           uri: lb://newsfeed-service
           predicates:
-            - Path=/**
+            - Path=/api/post/**
+        - id: user
+          uri: lb://user-service
+          predicates:
+            - Path=/api/users/**
+        - id: media
+          uri: lb://media-service
+          predicates:
+            - Path=/media/**
         - id: auth
           uri: lb://auth-service
           predicates:
