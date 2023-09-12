@@ -9,26 +9,31 @@ spring:
     consul:
       host: localhost
       port: 8500
+    discovery:
+      enabled: true
     gateway:
+      discovery:
+        locator:
+          enabled: true
       routes:
-        - id: user
-          uri: lb://user-service
-          predicates:
-            - Path=/user/**, /api/**
-          filters:
-            - AuthFilter
         - id: newsfeed
           uri: lb://newsfeed-service
           predicates:
-            - Path=/newsfeed/**, /api/**
-          filters:
-            - AuthFilter
+            - Path=/api/post/**
+        - id: user
+          uri: lb://user-service
+          predicates:
+            - Path=/api/users/**
+        - id: media
+          uri: lb://media-service
+          predicates:
+            - Path=/media/**
         - id: auth
           uri: lb://auth-service
           predicates:
-            - Path=/auth/**, /**
-          filters:
-            - AuthFilter
+            - Path=/**
+      default-filters:
+        - AuthFilter
 application:
   security:
     tokenSecret: 04ca023b39512e46d0c2cf4b48d5aac61d34302994c87ed4eff225dcf3b0a218739f3897051a057f9b846a69ea2927a587044164b7bae5e1306219d50b588cb1
