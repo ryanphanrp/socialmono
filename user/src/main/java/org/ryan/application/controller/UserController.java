@@ -26,11 +26,6 @@ public class UserController {
         return ResponseDto.ok(userService.getUser(username));
     }
 
-    @PostMapping
-    public ResponseDto<Long> createUser(@RequestBody UserCreateDto dto) {
-        return ResponseDto.ok(userService.createUser(dto));
-    }
-
     @PostMapping("/activate")
     public ResponseDto<Object> activateUser(@RequestHeader(GlobalConstant.USER_HEADER) String username) {
         userService.activateUserBy(username);
