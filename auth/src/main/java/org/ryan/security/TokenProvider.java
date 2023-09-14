@@ -30,7 +30,9 @@ public class TokenProvider {
     private Long refreshTokenExpiration;
 
     public String createToken(AuthUser authUserDetails) {
-        return buildToken(new HashMap<>(), authUserDetails.getUsername(), accessTokenExpiration);
+        Map<String, Object> extraClaims = new HashMap<>();
+        extraClaims.put("userId", authUserDetails.getUserId());
+        return buildToken(extraClaims, authUserDetails.getUsername(), accessTokenExpiration);
     }
 
     public String createRefreshToken(AuthUser authUserDetails) {
@@ -40,7 +42,14 @@ public class TokenProvider {
     private String buildToken(Map<String, Object> extraClaims, String username, Long expiration) {
         Date now = new Date();
         Date tokenExpiration = new Date(System.currentTimeMillis() + expiration);
-        return Jwts.builder().setClaims(extraClaims).setId(username).setSubject(username).setIssuedAt(now).setExpiration(tokenExpiration).signWith(toSigningKey(), SignatureAlgorithm.HS512).compact();
+        return Jwts.builder()
+                   .setClaims(extraClaims)
+                   .setId(username)
+                   .setSubject(username)
+                   .setIssuedAt(now)
+                   .setExpiration(tokenExpiration)
+                   .signWith(toSigningKey(), SignatureAlgorithm.HS512)
+                   .compact();
     }
 
     public String getUsernameFromToken(String token) {
