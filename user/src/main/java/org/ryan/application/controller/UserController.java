@@ -1,7 +1,6 @@
 package org.ryan.application.controller;
 
 import lombok.AllArgsConstructor;
-import org.ryan.application.dto.UserCreateDto;
 import org.ryan.application.dto.UserDetailDto;
 import org.ryan.constant.GlobalConstant;
 import org.ryan.domain.service.UserService;
@@ -24,11 +23,6 @@ public class UserController {
     @GetMapping("/{username}")
     public ResponseDto<UserDetailDto> userDetail(@PathVariable String username) {
         return ResponseDto.ok(userService.getUser(username));
-    }
-
-    @PostMapping
-    public ResponseDto<Long> createUser(@RequestBody UserCreateDto dto) {
-        return ResponseDto.ok(userService.createUser(dto));
     }
 
     @PostMapping("/activate")

@@ -1,10 +1,10 @@
-package org.ryan.application;
+package org.ryan.application.controller;
 
 import lombok.AllArgsConstructor;
-import org.ryan.application.dto.LoginInfoDto;
-import org.ryan.application.dto.RefreshTokenDto;
-import org.ryan.application.dto.UserCreateDto;
-import org.ryan.application.dto.UserLoginDto;
+import org.ryan.application.dto.response.LoginInfoDto;
+import org.ryan.application.dto.response.RefreshTokenDto;
+import org.ryan.application.dto.request.UserCreateDto;
+import org.ryan.application.dto.request.UserLoginDto;
 import org.ryan.domain.AuthService;
 import org.ryan.dto.ResponseDto;
 import org.springframework.web.bind.annotation.PostMapping;

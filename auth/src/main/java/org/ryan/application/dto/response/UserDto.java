@@ -1,4 +1,4 @@
-package org.ryan.application.dto;
+package org.ryan.application.dto.response;
 
 public record UserDto(Long userId, String username, String email, String password) {
     public static UserDto of(UserDetailDto dto) {
