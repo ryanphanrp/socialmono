@@ -34,7 +34,7 @@ public class PostController {
 
     @PostMapping
     public ResponseDto<Long> createPost(
-            @RequestHeader(GlobalConstant.USER_HEADER) Long userId,
+            @RequestHeader(GlobalConstant.USER_ID_HEADER) Long userId,
             @RequestBody PostCreateDto dto) {
         return ResponseDto.ok(postService.createPost(dto, userId));
     }
