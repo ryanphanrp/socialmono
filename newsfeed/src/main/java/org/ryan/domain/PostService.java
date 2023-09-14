@@ -24,8 +24,8 @@ public class PostService {
         return PostDto.of(post);
     }
 
-    public Long createPost(PostCreateDto postCreateDto) {
-        Post post = postCreateDto.toEntity();
+    public Long createPost(PostCreateDto dto, Long userId) {
+        Post post = dto.createPost(userId);
         postDao.save(post);
         return post.getPostId();
     }
