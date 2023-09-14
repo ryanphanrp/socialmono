@@ -1,5 +1,6 @@
 package org.ryan.domain;
 
+import lombok.Getter;
 import org.ryan.application.dto.UserDto;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -8,16 +9,19 @@ import java.util.Collection;
 import java.util.Collections;
 
 public class AuthUser implements UserDetails {
+    @Getter
+    private final Long userId;
     private final String username;
     private final String password;
 
-    public AuthUser(String email, String password) {
+    public AuthUser(Long userId, String email, String password) {
+        this.userId = userId;
         this.username = email;
         this.password = password;
     }
 
     public static AuthUser of(UserDto user) {
-        return new AuthUser(user.username(), user.password());
+        return new AuthUser(user.userId(), user.username(), user.password());
     }
 
     @Override

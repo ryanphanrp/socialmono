@@ -4,11 +4,14 @@ import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import lombok.extern.slf4j.Slf4j;
+import org.ryan.constant.ResponseCode;
+import org.ryan.exception.SocialMonoException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.security.Key;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.function.Function;
 
 @Slf4j
@@ -19,6 +22,12 @@ public class JwtUtil {
 
     public String getUsernameFromToken(String token) {
         return extractClaim(token, Claims::getId);
+    }
+
+    public Object getUserIdFromToken(String token) {
+        Claims claims = getClaims(token);
+        return Optional.ofNullable(claims.get("userId"))
+                .orElseThrow(() -> new SocialMonoException(ResponseCode.NOT_FOUND));
     }
 
     public boolean isValid(String token) {
