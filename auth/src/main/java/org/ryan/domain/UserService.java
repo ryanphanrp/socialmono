@@ -2,8 +2,8 @@ package org.ryan.domain;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.ryan.application.dto.UserDetailDto;
-import org.ryan.application.dto.UserDto;
+import org.ryan.application.dto.response.UserDetailDto;
+import org.ryan.application.dto.response.UserDto;
 import org.ryan.infrastructure.middleware.MessageSender;
 import org.springframework.stereotype.Service;
 

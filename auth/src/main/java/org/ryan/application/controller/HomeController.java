@@ -1,4 +1,4 @@
-package org.ryan.application;
+package org.ryan.application.controller;
 
 import org.ryan.dto.ResponseDto;
 import org.springframework.web.bind.annotation.GetMapping;

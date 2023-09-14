@@ -1,4 +1,4 @@
-package org.ryan.application.dto;
+package org.ryan.application.dto.response;
 
 import java.io.Serializable;
 

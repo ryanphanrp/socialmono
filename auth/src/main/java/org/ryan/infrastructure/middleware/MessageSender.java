@@ -2,7 +2,7 @@ package org.ryan.infrastructure.middleware;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.ryan.application.dto.UserDetailDto;
+import org.ryan.application.dto.response.UserDetailDto;
 import org.ryan.constant.RabbitMessage;
 import org.ryan.constant.ResponseCode;
 import org.ryan.dto.RpcResponse;
@@ -13,7 +13,6 @@ import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.stereotype.Component;
 
-import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
 
