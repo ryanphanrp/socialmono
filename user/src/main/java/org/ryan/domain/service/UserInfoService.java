@@ -1,7 +1,7 @@
 package org.ryan.domain.service;
 
 import lombok.RequiredArgsConstructor;
-import org.ryan.application.dto.UserInfoCreateDto;
+import org.ryan.application.dto.request.UserInfoCreateDto;
 import org.ryan.constant.ResponseCode;
 import org.ryan.domain.dao.UserDetailDao;
 import org.ryan.domain.dao.UserInfoDao;

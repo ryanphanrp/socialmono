@@ -1,8 +1,8 @@
 package org.ryan.application.controller;
 
 import lombok.AllArgsConstructor;
-import org.ryan.application.dto.FollowUserDto;
-import org.ryan.application.dto.UserFollowInfoDto;
+import org.ryan.application.dto.request.FollowUserDto;
+import org.ryan.application.dto.response.UserFollowInfoDto;
 import org.ryan.domain.service.UserFollowService;
 import org.ryan.dto.ResponseDto;
 import org.springframework.web.bind.annotation.*;

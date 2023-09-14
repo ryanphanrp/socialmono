@@ -1,8 +1,8 @@
 package org.ryan.domain.service;
 
 import lombok.RequiredArgsConstructor;
-import org.ryan.application.dto.FollowUserDto;
-import org.ryan.application.dto.UserFollowInfoDto;
+import org.ryan.application.dto.request.FollowUserDto;
+import org.ryan.application.dto.response.UserFollowInfoDto;
 import org.ryan.domain.dao.UserFollowDao;
 import org.ryan.domain.dao.UserFollowRepository;
 import org.ryan.domain.entity.UserFollow;

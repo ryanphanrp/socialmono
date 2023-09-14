@@ -1,7 +1,7 @@
 package org.ryan.application.controller;
 
 import lombok.AllArgsConstructor;
-import org.ryan.application.dto.UserDetailDto;
+import org.ryan.application.dto.response.UserDetailDto;
 import org.ryan.constant.GlobalConstant;
 import org.ryan.domain.service.UserService;
 import org.ryan.dto.ResponseDto;

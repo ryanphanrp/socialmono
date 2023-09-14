@@ -39,8 +39,7 @@ public class PostService {
     public PostDetailDto getDetailPost(Long postId) {
         Post post = postDao.findPostByPostId(postId)
                 .orElseThrow(CustomNotFoundException::new);
-        messageSender.sendMessage(post.getUserId());
-        var userDto = messageHandler.receiveMessage();
+        var userDto = messageSender.getUserDto(post.getUserId());
         return PostDetailDto.of(PostDto.of(post), userDto);
     }
 }
