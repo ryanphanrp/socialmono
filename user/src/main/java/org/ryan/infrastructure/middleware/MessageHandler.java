@@ -2,8 +2,9 @@ package org.ryan.infrastructure.middleware;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.ryan.application.dto.UserCreateDto;
-import org.ryan.application.dto.UserDetailDto;
+import org.ryan.application.dto.request.UserCreateDto;
+import org.ryan.application.dto.response.UserDetailDto;
+import org.ryan.application.dto.response.UserDto;
 import org.ryan.constant.RabbitMessage;
 import org.ryan.constant.ResponseCode;
 import org.ryan.domain.dao.UserDao;
@@ -28,6 +29,14 @@ public class MessageHandler {
         Optional<User> userOpt = userDao.findUserByUsername(message);
         return userOpt.map(user -> RpcResponse.ok(UserDetailDto.of(user)))
                       .orElseGet(() -> RpcResponse.error(ResponseCode.NOT_FOUND));
+    }
+
+    @RabbitListener(queues = RabbitMessage.USER_REQUEST)
+    public RpcResponse<UserDto> receiveNewsfeed(String message) {
+        log.info("Received - Auth: {}", message);
+        Optional<User> userOpt = userDao.findUserByUsername(message);
+        return userOpt.map(user -> RpcResponse.ok(UserDto.of(user)))
+                .orElseGet(() -> RpcResponse.error(ResponseCode.NOT_FOUND));
     }
 
     @RabbitListener(queues = RabbitMessage.REGISTER_REQUEST)

@@ -1,4 +1,4 @@
-package org.ryan.application.dto;
+package org.ryan.application.dto.response;
 
 import org.ryan.domain.entity.pojo.UserFollowDetail;
 

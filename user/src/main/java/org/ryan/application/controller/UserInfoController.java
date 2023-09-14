@@ -1,7 +1,7 @@
 package org.ryan.application.controller;
 
 import lombok.AllArgsConstructor;
-import org.ryan.application.dto.UserInfoCreateDto;
+import org.ryan.application.dto.request.UserInfoCreateDto;
 import org.ryan.constant.GlobalConstant;
 import org.ryan.domain.entity.pojo.UserDetail;
 import org.ryan.domain.service.UserInfoService;

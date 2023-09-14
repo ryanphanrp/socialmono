@@ -1,4 +1,4 @@
-package org.ryan.application.dto;
+package org.ryan.application.dto.request;
 
 import org.ryan.domain.entity.UserInfo;
 

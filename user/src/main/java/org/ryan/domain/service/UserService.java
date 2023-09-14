@@ -1,8 +1,8 @@
 package org.ryan.domain.service;
 
 import lombok.RequiredArgsConstructor;
-import org.ryan.application.dto.UserCreateDto;
-import org.ryan.application.dto.UserDetailDto;
+import org.ryan.application.dto.request.UserCreateDto;
+import org.ryan.application.dto.response.UserDetailDto;
 import org.ryan.domain.constant.UserStatus;
 import org.ryan.domain.dao.UserDao;
 import org.ryan.domain.entity.User;
