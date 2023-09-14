@@ -1,6 +1,6 @@
 package org.ryan.domain;
 
-import org.ryan.application.dto.UserDto;
+import org.ryan.application.dto.response.UserDto;
 import org.ryan.constant.ResponseCode;
 import org.ryan.exception.SocialMonoException;
 import org.springframework.beans.factory.annotation.Autowired;

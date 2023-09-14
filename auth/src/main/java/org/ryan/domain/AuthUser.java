@@ -1,7 +1,7 @@
 package org.ryan.domain;
 
 import lombok.Getter;
-import org.ryan.application.dto.UserDto;
+import org.ryan.application.dto.response.UserDto;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -57,5 +57,9 @@ public class AuthUser implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return Collections.emptyList();
+    }
+
+    public boolean isCorrectPassword(String pwd) {
+        return this.password.equals(pwd);
     }
 }

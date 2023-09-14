@@ -1,10 +1,12 @@
 package org.ryan.domain;
 
 import lombok.AllArgsConstructor;
-import org.ryan.application.dto.LoginInfoDto;
-import org.ryan.application.dto.RefreshTokenDto;
-import org.ryan.application.dto.UserCreateDto;
-import org.ryan.application.dto.UserLoginDto;
+import org.ryan.application.dto.response.LoginInfoDto;
+import org.ryan.application.dto.response.RefreshTokenDto;
+import org.ryan.application.dto.request.UserCreateDto;
+import org.ryan.application.dto.request.UserLoginDto;
+import org.ryan.constant.ResponseCode;
+import org.ryan.exception.SocialMonoException;
 import org.ryan.infrastructure.middleware.MessageSender;
 import org.ryan.security.TokenProvider;
 import org.springframework.stereotype.Service;
@@ -18,6 +20,8 @@ public class AuthService {
 
     public LoginInfoDto login(UserLoginDto dto) {
         AuthUser authUser = authUserService.loadUserByUsername(dto.username());
+        if (!authUser.isCorrectPassword(dto.password()))
+            throw new SocialMonoException(ResponseCode.UNAUTHORIZED);
         return toLoginInfoDto(authUser);
     }
 
