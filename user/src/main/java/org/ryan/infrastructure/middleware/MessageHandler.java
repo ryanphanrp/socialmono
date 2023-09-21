@@ -3,7 +3,6 @@ package org.ryan.infrastructure.middleware;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.ryan.application.dto.request.UserCreateDto;
-import org.ryan.application.dto.response.UserDetailDto;
 import org.ryan.application.dto.response.UserDto;
 import org.ryan.constant.RabbitMessage;
 import org.ryan.constant.ResponseCode;
@@ -11,6 +10,7 @@ import org.ryan.domain.dao.UserDao;
 import org.ryan.domain.entity.User;
 import org.ryan.domain.service.UserService;
 import org.ryan.dto.RpcResponse;
+import org.ryan.dto.shared.UserRPCDto;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Component;
 
@@ -24,24 +24,29 @@ public class MessageHandler {
     private final UserDao userDao;
 
     @RabbitListener(queues = RabbitMessage.AUTH_REQUEST)
-    public RpcResponse<UserDetailDto> receiveAuth(String message) {
+    public RpcResponse<UserRPCDto> receiveAuth(String message) {
         log.info("Received - Auth: {}", message);
         Optional<User> userOpt = userDao.findUserByUsername(message);
-        return userOpt.map(user -> RpcResponse.ok(UserDetailDto.of(user)))
-                      .orElseGet(() -> RpcResponse.error(ResponseCode.NOT_FOUND));
+        return userOpt.map(user -> RpcResponse.ok(
+                UserRPCDto.from(user.getUserId(),
+                                user.getUsername(),
+                                user.getEmail(),
+                                String.valueOf(user.getStatus()),
+                                user.getPassword()))
+                      ).orElseGet(() -> RpcResponse.error(ResponseCode.NOT_FOUND));
     }
 
     @RabbitListener(queues = RabbitMessage.USER_REQUEST)
-    public RpcResponse<UserDto> receiveNewsfeed(String message) {
-        log.info("Received - Auth: {}", message);
-        Optional<User> userOpt = userDao.findUserByUsername(message);
+    public RpcResponse<UserDto> receiveNewsfeed(Long message) {
+        log.info("Received - User: {}", message);
+        Optional<User> userOpt = userDao.findUserByUserId(message);
         return userOpt.map(user -> RpcResponse.ok(UserDto.of(user)))
-                .orElseGet(() -> RpcResponse.error(ResponseCode.NOT_FOUND));
+                      .orElseGet(() -> RpcResponse.error(ResponseCode.NOT_FOUND));
     }
 
     @RabbitListener(queues = RabbitMessage.REGISTER_REQUEST)
     public Long receiveRegister(UserCreateDto request) {
-        log.info("Receive - Register: {}", request);
+        log.info("Received - Register: {}", request);
         return userService.createUser(request);
     }
 }
