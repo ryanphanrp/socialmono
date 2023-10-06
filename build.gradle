@@ -31,13 +31,18 @@ subprojects {
 
 
     def childModules = ['newsfeed', 'user', 'media','auth', 'gateway']
-    def featuresModules = ['newsfeed', 'user', 'media']
+    def featuresModules = ['newsfeed', 'user']
 
     if (name in featuresModules) {
         dependencies {
-            implementation 'org.springframework.boot:spring-boot-starter-amqp'
             implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
             runtimeOnly 'com.mysql:mysql-connector-j'
+        }
+    }
+
+    if (name in ['newsfeed', 'user', 'media']) {
+        dependencies {
+            implementation 'org.springframework.boot:spring-boot-starter-amqp'
         }
     }
 
