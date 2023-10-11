@@ -60,6 +60,6 @@ public class AuthUser implements UserDetails {
     }
 
     public boolean isCorrectPassword(String pwd) {
-        return this.password.equals(pwd);
+        return password.equals(pwd);
     }
 }

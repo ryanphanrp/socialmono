@@ -1,6 +1,9 @@
 package org.ryan.constant;
 
-public final class RabbitMessage {
+import lombok.experimental.UtilityClass;
+
+@UtilityClass
+public class RabbitMessage {
     public static final String DIRECT_EXCHANGE = "rpc.exchange";
 
     public static final String AUTH_ROUTING_KEY = "auth.routing.key";

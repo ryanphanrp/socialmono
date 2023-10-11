@@ -19,17 +19,18 @@ public class RabbitConfig {
 
     @Bean
     public Queue authQueue() {
-        return QueueBuilder.durable(RabbitMessage.AUTH_REQUEST)
-                .deadLetterExchange(RabbitMessage.DEAD_LETTER_EXCHANGE)
-                .deadLetterRoutingKey(RabbitMessage.DEAD_LETTER_ROUTING)
-                .build();
+        return createQueue(RabbitMessage.AUTH_REQUEST);
+    }
+
+    @Bean
+    public Queue userQueue() {
+        return createQueue(RabbitMessage.USER_REQUEST);
     }
 
     @Bean
     public Queue registerQueue() {
-        return new Queue(RabbitMessage.REGISTER_REQUEST);
+        return createQueue(RabbitMessage.REGISTER_REQUEST);
     }
-
 
     /* Dead Letter */
     @Bean
@@ -47,15 +48,19 @@ public class RabbitConfig {
         return BindingBuilder.bind(deadLetterQueue()).to(deadLetterExchange());
     }
 
-
     @Bean
-    public Binding authBinding(Queue authQueue, DirectExchange exchange) {
-        return BindingBuilder.bind(authQueue).to(exchange).with(RabbitMessage.AUTH_ROUTING_KEY);
+    public Binding authBinding() {
+        return BindingBuilder.bind(authQueue()).to(exchange()).with(RabbitMessage.AUTH_ROUTING_KEY);
     }
 
     @Bean
-    public Binding registerBinding(Queue registerQueue, DirectExchange exchange) {
-        return BindingBuilder.bind(registerQueue).to(exchange).with(RabbitMessage.REGISTER_ROUTING_KEY);
+    public Binding userBinding() {
+        return BindingBuilder.bind(userQueue()).to(exchange()).with(RabbitMessage.USER_ROUTING_KEY);
+    }
+
+    @Bean
+    public Binding registerBinding() {
+        return BindingBuilder.bind(registerQueue()).to(exchange()).with(RabbitMessage.REGISTER_ROUTING_KEY);
     }
 
     @Bean
@@ -68,5 +73,12 @@ public class RabbitConfig {
         var rabbitTemplate = new RabbitTemplate(connection);
         rabbitTemplate.setMessageConverter(converter());
         return rabbitTemplate;
+    }
+
+    private Queue createQueue(String queueName) {
+        return QueueBuilder.durable(queueName)
+                           .deadLetterExchange(RabbitMessage.DEAD_LETTER_EXCHANGE)
+                           .deadLetterRoutingKey(RabbitMessage.DEAD_LETTER_ROUTING)
+                           .build();
     }
 }

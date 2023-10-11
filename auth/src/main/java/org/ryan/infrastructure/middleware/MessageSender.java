@@ -2,10 +2,10 @@ package org.ryan.infrastructure.middleware;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.ryan.application.dto.response.UserDetailDto;
 import org.ryan.constant.RabbitMessage;
 import org.ryan.constant.ResponseCode;
 import org.ryan.dto.RpcResponse;
+import org.ryan.dto.shared.UserRPCDto;
 import org.ryan.exception.SocialMonoException;
 import org.ryan.exception.customize.CustomNotFoundException;
 import org.springframework.amqp.rabbit.connection.CorrelationData;
@@ -22,10 +22,10 @@ import java.util.UUID;
 public class MessageSender {
     private final RabbitTemplate rabbitTemplate;
 
-    public UserDetailDto getUserDetailRPC(String request) {
+    public UserRPCDto getUserDetailRPC(String request) {
         log.info("Sending message - user detail: {}", request);
         CorrelationData correlationData = new CorrelationData(UUID.randomUUID().toString());
-        RpcResponse<UserDetailDto> response = rabbitTemplate.convertSendAndReceiveAsType(
+        RpcResponse<UserRPCDto> response = rabbitTemplate.convertSendAndReceiveAsType(
                 RabbitMessage.DIRECT_EXCHANGE,
                 RabbitMessage.AUTH_ROUTING_KEY,
                 request, correlationData,
