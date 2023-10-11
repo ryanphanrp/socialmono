@@ -2,7 +2,7 @@ version: "3"
 services:
   consul_server:
     container_name: consul_server
-    image: consul:1.15.4
+    build: ./docker/consul
     ports:
       - "8400:8400"
       - "8500:8500"
