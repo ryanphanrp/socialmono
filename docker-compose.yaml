@@ -1,6 +1,6 @@
 version: "3"
 services:
-  consul_server:
+  consul:
     container_name: consul_server
     build: ./docker/consul
     ports:
