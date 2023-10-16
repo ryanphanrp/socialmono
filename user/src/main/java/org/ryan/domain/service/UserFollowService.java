@@ -6,6 +6,7 @@ import org.ryan.application.dto.response.UserFollowInfoDto;
 import org.ryan.domain.dao.UserFollowDao;
 import org.ryan.domain.dao.UserFollowRepository;
 import org.ryan.domain.entity.UserFollow;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -15,6 +16,7 @@ public class UserFollowService {
     private final UserFollowRepository userFollowRepository;
     private final UserFollowDao userFollowDao;
 
+    @Cacheable(cacheNames = "user_follow", key = "#userId")
     public UserFollowInfoDto getUserFollowDetail(Long userId) {
         return UserFollowInfoDto.of(userFollowDao.getUserFollowDetail(userId));
     }
