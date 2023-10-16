@@ -47,10 +47,20 @@ services:
       - MINIO_ACCESS_KEY=2toxGr9rkiDV77KG
       - MINIO_SECRET_KEY=b1lnyNTlc0FJECAxCE4phPYrSKLcpx9G
     command: server --console-address ":9001" /data
+  redis:
+    image: redis:latest
+    container_name: redis_server
+    ports:
+      - "6379:6379"
+    networks:
+      - socialmono_network
+    volumes:
+      - redis_vol:/data
 volumes:
   newsfeed_vol:
   user_vol:
   s3storage:
+  redis_vol:
 networks:
   socialmono_network:
     driver: bridge

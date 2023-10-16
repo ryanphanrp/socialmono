@@ -8,6 +8,7 @@ import org.ryan.domain.dao.UserInfoDao;
 import org.ryan.domain.entity.UserInfo;
 import org.ryan.domain.entity.pojo.UserDetail;
 import org.ryan.exception.SocialMonoException;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -27,6 +28,7 @@ public class UserInfoService {
         return userInfoDao.save(userInfo).getUserInfoId();
     }
 
+    @Cacheable(cacheNames = "user_info", key = "#username")
     public UserDetail getUserInfoDetail(String username) {
         return userDetailDao.findUserInfoByUsername(username)
                 .orElseThrow(() -> new SocialMonoException(ResponseCode.NOT_FOUND));
