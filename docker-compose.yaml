@@ -56,11 +56,33 @@ services:
       - socialmono_network
     volumes:
       - redis_vol:/data
+  mongo:
+    image: mongo
+    container_name: mongodb
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: password
+    networks:
+      - socialmono_network
+  mongo-express:
+    image: mongo-express
+    container_name: mongodb_admin
+    ports:
+      - "27018:8081"
+    environment:
+      ME_CONFIG_MONGODB_URL: mongodb://root:password@mongo:27017/
+    depends_on:
+      - mongo
+    networks:
+      - socialmono_network
 volumes:
   newsfeed_vol:
   user_vol:
   s3storage:
   redis_vol:
+  mongo:
 networks:
   socialmono_network:
     driver: bridge

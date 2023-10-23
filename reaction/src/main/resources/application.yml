@@ -1,0 +1,17 @@
+spring:
+  application:
+    name: reaction-service
+  config:
+    import: consul:localhost:8500
+  cloud:
+    consul:
+      config:
+        format: yaml
+        data-key: application
+        enabled: true
+      host: localhost
+      port: 8500
+      discovery:
+        prefer-ip-address: true
+server:
+  port: 4567

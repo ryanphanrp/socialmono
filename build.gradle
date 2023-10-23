@@ -30,10 +30,9 @@ subprojects {
     apply plugin: 'io.spring.dependency-management'
 
 
-    def childModules = ['newsfeed', 'user', 'media','auth', 'gateway']
-    def featuresModules = ['newsfeed', 'user']
+    def childModules = ['newsfeed', 'user', 'media','auth', 'gateway', 'reaction']
 
-    if (name in featuresModules) {
+    if (name in ['newsfeed', 'user']) {
         dependencies {
             implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
             runtimeOnly 'com.mysql:mysql-connector-j'
@@ -49,7 +48,6 @@ subprojects {
     if (name in childModules) {
         dependencies {
             implementation project(path: ':core')
-
             implementation 'org.springframework.cloud:spring-cloud-starter-consul-config:4.0.3'
             implementation 'org.springframework.cloud:spring-cloud-starter-consul-discovery:4.0.3'
             implementation 'org.springframework.boot:spring-boot-starter-actuator'
