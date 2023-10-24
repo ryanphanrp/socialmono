@@ -1,10 +1,11 @@
 package org.ryan.application.controller;
 
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
-import org.ryan.application.dto.response.LoginInfoDto;
-import org.ryan.application.dto.response.RefreshTokenDto;
 import org.ryan.application.dto.request.UserCreateDto;
 import org.ryan.application.dto.request.UserLoginDto;
+import org.ryan.application.dto.response.LoginInfoDto;
+import org.ryan.application.dto.response.RefreshTokenDto;
 import org.ryan.domain.AuthService;
 import org.ryan.dto.ResponseDto;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,17 +20,17 @@ public class AuthController {
     private final AuthService authService;
 
     @PostMapping("/login")
-    public ResponseDto<LoginInfoDto> login(@RequestBody UserLoginDto dto) {
+    public ResponseDto<LoginInfoDto> login(@Valid @RequestBody UserLoginDto dto) {
         return ResponseDto.ok(authService.login(dto));
     }
 
     @PostMapping("/register")
-    public ResponseDto<Long> register(@RequestBody UserCreateDto dto) {
+    public ResponseDto<Long> register(@Valid @RequestBody UserCreateDto dto) {
         return ResponseDto.ok(authService.register(dto));
     }
 
     @PostMapping("/refresh")
-    public ResponseDto<LoginInfoDto> refresh(@RequestBody RefreshTokenDto dto) {
+    public ResponseDto<LoginInfoDto> refresh(@Valid @RequestBody RefreshTokenDto dto) {
         return ResponseDto.ok(authService.refresh(dto));
     }
 }
