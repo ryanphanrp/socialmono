@@ -1,5 +1,6 @@
 package org.ryan.application.controller;
 
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.ryan.application.dto.PostCreateDto;
 import org.ryan.application.dto.PostDetailDto;
@@ -35,7 +36,7 @@ public class PostController {
     @PostMapping
     public ResponseDto<Long> createPost(
             @RequestHeader(GlobalConstant.USER_ID_HEADER) Long userId,
-            @RequestBody PostCreateDto dto) {
+            @Valid @RequestBody PostCreateDto dto) {
         return ResponseDto.ok(postService.createPost(dto, userId));
     }
 }
