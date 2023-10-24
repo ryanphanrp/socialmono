@@ -50,7 +50,7 @@ public class CommentController {
                              .thenReturn(ResponseDto.ok());
     }
 
-    // gen request all comment with ownerid
+    // gen request all comment with owner
     @GetMapping("/owner/{id}")
     Publisher<ResponseDto<List<Comment>>> getAllCommentsByOwnerId(@PathVariable("id") Long id) {
         return commentService.findAllCommentsByOwnerId(id)
