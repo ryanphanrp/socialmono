@@ -52,31 +52,25 @@ public class AuthFilter extends AbstractGatewayFilterFactory<Object> {
   }
 
   private Mono<Void> onError(
-      ServerWebExchange exchange,
-      ResponseCode responseCode
+      ServerWebExchange exchange, ResponseCode responseCode
   ) {
     ServerHttpResponse response = exchange.getResponse();
     response.setStatusCode(responseCode.getHttpStatus());
-    response.getHeaders()
-            .setContentType(MediaType.APPLICATION_JSON);
-    String content = Optional.ofNullable(JSONUtils.stringify(ResponseDto.error(
-                                 responseCode)))
+    response.getHeaders().setContentType(MediaType.APPLICATION_JSON);
+    String content = Optional.ofNullable(JSONUtils.stringify(ResponseDto.error(responseCode)))
                              .orElse("");
     return response.writeWith(Mono.just(content)
                                   .map(b -> response.bufferFactory()
-                                                    .wrap(b.getBytes(
-                                                        StandardCharsets.UTF_8))));
+                                                    .wrap(b.getBytes(StandardCharsets.UTF_8))
+                                  ));
   }
 
   private boolean hasAuthorization(ServerHttpRequest request) {
-    return request.getHeaders()
-                  .containsKey(HttpHeaders.AUTHORIZATION);
+    return request.getHeaders().containsKey(HttpHeaders.AUTHORIZATION);
   }
 
   private String getAuthToken(ServerHttpRequest request) {
-    var header = request.getHeaders()
-                        .getOrEmpty(HttpHeaders.AUTHORIZATION)
-                        .get(0);
+    var header = request.getHeaders().getOrEmpty(HttpHeaders.AUTHORIZATION).get(0);
     if (StringUtils.hasText(header)) {
       return header.startsWith(AUTH_KEY) ? header.substring(7) : header;
     }
