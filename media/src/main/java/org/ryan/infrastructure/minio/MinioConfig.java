@@ -8,18 +8,22 @@ import org.springframework.context.annotation.Primary;
 
 @Configuration
 public class MinioConfig {
-    @Value("${spring.minio.endpoint}")
-    private String endpoint;
 
-    @Value("${spring.minio.accessKey}")
-    private String accessKey;
+  @Value("${spring.minio.endpoint}")
+  private String endpoint;
 
-    @Value("${spring.minio.secretKey}")
-    private String secretKey;
+  @Value("${spring.minio.accessKey}")
+  private String accessKey;
 
-    @Bean
-    @Primary
-    public MinioClient minioClient() {
-        return MinioClient.builder().endpoint(endpoint).credentials(accessKey, secretKey).build();
-    }
+  @Value("${spring.minio.secretKey}")
+  private String secretKey;
+
+  @Bean
+  @Primary
+  public MinioClient minioClient() {
+    return MinioClient.builder()
+                      .endpoint(endpoint)
+                      .credentials(accessKey, secretKey)
+                      .build();
+  }
 }

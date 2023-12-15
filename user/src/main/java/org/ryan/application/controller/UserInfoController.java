@@ -1,26 +1,31 @@
 package org.ryan.application.controller;
 
 import lombok.AllArgsConstructor;
+import lombok.NonNull;
 import org.ryan.application.dto.request.UserInfoCreateDto;
 import org.ryan.constant.GlobalConstant;
 import org.ryan.domain.entity.pojo.UserDetail;
 import org.ryan.domain.service.UserInfoService;
 import org.ryan.dto.ResponseDto;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping("/api/users/info")
-public class UserInfoController {
-    private final UserInfoService userInfoService;
+public class UserInfoController implements UserInfoAPI {
 
-    @PostMapping
-    public ResponseDto<Object> createUserInfo(@RequestHeader(GlobalConstant.USER_HEADER) String username, @RequestBody UserInfoCreateDto dto) {
-        return ResponseDto.ok(userInfoService.createUserInfo(username, dto));
-    }
+  @NonNull
+  final UserInfoService userInfoService;
 
-    @GetMapping("/{username}")
-    public ResponseDto<UserDetail> getUserDetail(@PathVariable String username) {
-        return ResponseDto.ok(userInfoService.getUserInfoDetail(username));
-    }
+  public ResponseDto<Object> createUserInfo(
+      @RequestHeader(GlobalConstant.USER_HEADER) String username, @RequestBody UserInfoCreateDto dto
+  ) {
+    return ResponseDto.ok(userInfoService.createUserInfo(username, dto));
+  }
+
+  public ResponseDto<UserDetail> getUserDetail(@PathVariable String username) {
+    return ResponseDto.ok(userInfoService.getUserInfoDetail(username));
+  }
 }

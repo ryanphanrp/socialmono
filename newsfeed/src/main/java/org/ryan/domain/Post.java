@@ -4,11 +4,14 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import lombok.*;
+import java.time.LocalDateTime;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
-
-import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -18,16 +21,17 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "posts")
 public class Post {
-    @Id
-    @GeneratedValue
-    private Long postId;
-    private Long userId;
 
-    private String content;
+  @Id
+  @GeneratedValue
+  private Long postId;
+  private Long userId;
 
-    @CreatedDate
-    private LocalDateTime createdAt;
+  private String content;
 
-    @LastModifiedDate
-    private LocalDateTime updatedAt;
+  @CreatedDate
+  private LocalDateTime createdAt;
+
+  @LastModifiedDate
+  private LocalDateTime updatedAt;
 }

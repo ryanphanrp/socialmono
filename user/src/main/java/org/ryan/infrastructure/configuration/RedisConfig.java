@@ -10,21 +10,25 @@ import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactor
 
 @Configuration
 public class RedisConfig {
-    @Value("${redis.host}")
-    private String redisHost;
 
-    @Value("${redis.port}")
-    private int redisPort;
+  @Value("${redis.host}")
+  private String redisHost;
 
-    @Bean
-    public LettuceConnectionFactory redisConnectionFactory() {
-        RedisStandaloneConfiguration configuration = new RedisStandaloneConfiguration(redisHost, redisPort);
-        return new LettuceConnectionFactory(configuration);
-    }
+  @Value("${redis.port}")
+  private int redisPort;
 
-    @Bean
-    public RedisCacheManager cacheManager(RedisConnectionFactory connectionFactory) {
-        return RedisCacheManager.create(connectionFactory);
-    }
+  @Bean
+  public LettuceConnectionFactory redisConnectionFactory() {
+    RedisStandaloneConfiguration configuration = new RedisStandaloneConfiguration(
+        redisHost,
+        redisPort
+    );
+    return new LettuceConnectionFactory(configuration);
+  }
+
+  @Bean
+  public RedisCacheManager cacheManager(RedisConnectionFactory connectionFactory) {
+    return RedisCacheManager.create(connectionFactory);
+  }
 
 }

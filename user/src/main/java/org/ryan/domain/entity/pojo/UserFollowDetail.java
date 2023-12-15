@@ -1,6 +1,10 @@
 package org.ryan.domain.entity.pojo;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Getter
 @Setter
@@ -8,6 +12,7 @@ import lombok.*;
 @NoArgsConstructor
 @Builder
 public class UserFollowDetail {
-    Long followers;
-    Long following;
+
+  Long followers;
+  Long following;
 }

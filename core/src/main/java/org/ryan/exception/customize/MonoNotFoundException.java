@@ -7,11 +7,12 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ResponseStatus(HttpStatus.NOT_FOUND)
 public class CustomNotFoundException extends SocialMonoException {
-    public CustomNotFoundException() {
-        super(ResponseCode.NOT_FOUND);
-    }
 
-    public CustomNotFoundException(String message) {
-        super(ResponseCode.NOT_FOUND, message);
-    }
+  public CustomNotFoundException() {
+    super(ResponseCode.NOT_FOUND);
+  }
+
+  public CustomNotFoundException(String message) {
+    super(ResponseCode.NOT_FOUND, message);
+  }
 }

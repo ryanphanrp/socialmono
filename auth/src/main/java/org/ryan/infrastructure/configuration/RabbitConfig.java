@@ -13,20 +13,20 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class RabbitConfig {
 
-    @Bean
-    public DirectExchange exchange() {
-        return new DirectExchange(RabbitMessage.DIRECT_EXCHANGE);
-    }
+  @Bean
+  public DirectExchange exchange() {
+    return new DirectExchange(RabbitMessage.DIRECT_EXCHANGE);
+  }
 
-    @Bean
-    public MessageConverter converter() {
-        return new Jackson2JsonMessageConverter();
-    }
+  @Bean
+  public MessageConverter converter() {
+    return new Jackson2JsonMessageConverter();
+  }
 
-    @Bean
-    public AmqpTemplate amqpTemplate(ConnectionFactory connection) {
-        var rabbitTemplate = new RabbitTemplate(connection);
-        rabbitTemplate.setMessageConverter(converter());
-        return rabbitTemplate;
-    }
+  @Bean
+  public AmqpTemplate amqpTemplate(ConnectionFactory connection) {
+    var rabbitTemplate = new RabbitTemplate(connection);
+    rabbitTemplate.setMessageConverter(converter());
+    return rabbitTemplate;
+  }
 }

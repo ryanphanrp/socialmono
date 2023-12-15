@@ -7,7 +7,8 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 @EnableDiscoveryClient
 @SpringBootApplication
 public class MediaServiceApplication {
-    public static void main(String[] args) {
-        SpringApplication.run(MediaServiceApplication.class, args);
-    }
+
+  public static void main(String[] args) {
+    SpringApplication.run(MediaServiceApplication.class, args);
+  }
 }

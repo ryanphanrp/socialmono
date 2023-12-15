@@ -11,10 +11,11 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class UserService {
-    private final MessageSender messageSender;
 
-    public UserDto getUser(String username) {
-        UserRPCDto user = messageSender.getUserDetailRPC(username);
-        return UserDto.of(user);
-    }
+  private final MessageSender messageSender;
+
+  public UserDto getUser(String username) {
+    UserRPCDto user = messageSender.getUserDetailRPC(username);
+    return UserDto.of(user);
+  }
 }

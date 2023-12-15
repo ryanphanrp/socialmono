@@ -13,20 +13,20 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class UserFollowService {
 
-    private final UserFollowRepository userFollowRepository;
-    private final UserFollowDao userFollowDao;
+  private final UserFollowRepository userFollowRepository;
+  private final UserFollowDao userFollowDao;
 
-    @Cacheable(cacheNames = "user_follow", key = "#userId")
-    public UserFollowInfoDto getUserFollowDetail(Long userId) {
-        return UserFollowInfoDto.of(userFollowDao.getUserFollowDetail(userId));
-    }
+  @Cacheable(cacheNames = "user_follow", key = "#userId")
+  public UserFollowInfoDto getUserFollowDetail(Long userId) {
+    return UserFollowInfoDto.of(userFollowDao.getUserFollowDetail(userId));
+  }
 
-    public Long followUser(FollowUserDto dto) {
-        UserFollow user = UserFollow.builder()
-                .fromUserId(dto.from())
-                .toUserId(dto.to())
-                .build();
-        userFollowRepository.save(user);
-        return user.getUserFollowId();
-    }
+  public Long followUser(FollowUserDto dto) {
+    UserFollow user = UserFollow.builder()
+                                .fromUserId(dto.from())
+                                .toUserId(dto.to())
+                                .build();
+    userFollowRepository.save(user);
+    return user.getUserFollowId();
+  }
 }

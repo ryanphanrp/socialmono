@@ -15,22 +15,22 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class UserInfoService {
 
-    private final UserInfoDao userInfoDao;
-    private final UserDetailDao userDetailDao;
-    private final UserService userService;
+  private final UserInfoDao userInfoDao;
+  private final UserDetailDao userDetailDao;
+  private final UserService userService;
 
-    public Long createUserInfo(String username, UserInfoCreateDto dto) {
-        // TODO: need to validate by Spring Security
-        if (!userService.validateUserId(username, dto.userId())) {
-            throw new SocialMonoException(ResponseCode.FORBIDDEN);
-        }
-        UserInfo userInfo = dto.toEntity();
-        return userInfoDao.save(userInfo).getUserInfoId();
+  public Long createUserInfo(String username, UserInfoCreateDto dto) {
+    // TODO: need to validate by Spring Security
+    if (!userService.validateUserId(username, dto.userId())) {
+      throw new SocialMonoException(ResponseCode.FORBIDDEN);
     }
+    UserInfo userInfo = dto.toEntity();
+    return userInfoDao.save(userInfo).getUserInfoId();
+  }
 
-    @Cacheable(cacheNames = "user_info", key = "#username")
-    public UserDetail getUserInfoDetail(String username) {
-        return userDetailDao.findUserInfoByUsername(username)
-                .orElseThrow(() -> new SocialMonoException(ResponseCode.NOT_FOUND));
-    }
+  @Cacheable(cacheNames = "user_info", key = "#username")
+  public UserDetail getUserInfoDetail(String username) {
+    return userDetailDao.findUserInfoByUsername(username)
+                        .orElseThrow(() -> new SocialMonoException(ResponseCode.NOT_FOUND));
+  }
 }

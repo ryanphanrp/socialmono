@@ -9,5 +9,6 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 public class MessageHandler {
-    private final RabbitTemplate rabbitTemplate;
+
+  private final RabbitTemplate rabbitTemplate;
 }

@@ -1,27 +1,28 @@
 package org.ryan.utils;
 
-import lombok.experimental.UtilityClass;
-
 import java.security.SecureRandom;
 import java.util.stream.Collectors;
+import lombok.experimental.UtilityClass;
 
 @UtilityClass
 public class PasswordUtil {
-    private static final int DEFAULT_LENGTH = 10;
-    private static final String LOWER = "abcdefghijklmnopqrstuvwxyz";
-    private static final String UPPER = LOWER.toUpperCase();
-    private static final String NUMBER = "0123456789";
-    private static final String OTHER = "!@#$%&*()_+-=[]?";
-    private static final String BASE = LOWER + UPPER + NUMBER + OTHER;
 
-    public static String generatePassword() {
-        return generatePassword(DEFAULT_LENGTH);
-    }
+  private static final int DEFAULT_LENGTH = 10;
+  private static final String LOWER = "abcdefghijklmnopqrstuvwxyz";
+  private static final String UPPER = LOWER.toUpperCase();
+  private static final String NUMBER = "0123456789";
+  private static final String OTHER = "!@#$%&*()_+-=[]?";
+  private static final String BASE = LOWER + UPPER + NUMBER + OTHER;
 
-    public static String generatePassword(long length) {
-        SecureRandom random = new SecureRandom();
-        return random.ints(length, 0, BASE.length())
-                .mapToObj(BASE::charAt).map(Object::toString)
-                .collect(Collectors.joining());
-    }
+  public static String generatePassword() {
+    return generatePassword(DEFAULT_LENGTH);
+  }
+
+  public static String generatePassword(long length) {
+    SecureRandom random = new SecureRandom();
+    return random.ints(length, 0, BASE.length())
+                 .mapToObj(BASE::charAt)
+                 .map(Object::toString)
+                 .collect(Collectors.joining());
+  }
 }

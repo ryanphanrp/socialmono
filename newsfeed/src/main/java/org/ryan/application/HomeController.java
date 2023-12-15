@@ -8,8 +8,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/newsfeed")
 @RestController
 public class HomeController {
-    @GetMapping
-    public ResponseDto<String> home() {
-        return ResponseDto.ok("Hello world! - NewsFeed Service");
-    }
+
+  @GetMapping
+  public ResponseDto<String> home() {
+    return ResponseDto.ok("Hello world! - NewsFeed Service");
+  }
 }
