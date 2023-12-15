@@ -44,15 +44,8 @@ public class AuthFilter extends AbstractGatewayFilterFactory<Object> {
       }
       exchange.getRequest()
               .mutate()
-              .header(
-                  GlobalConstant.USER_ID_HEADER,
-                  jwtUtil.getUserIdFromToken(token)
-                         .toString()
-              )
-              .header(
-                  GlobalConstant.USER_HEADER,
-                  jwtUtil.getUsernameFromToken(token)
-              )
+              .header(GlobalConstant.USER_ID_HEADER, jwtUtil.getUserIdFromToken(token).toString())
+              .header(GlobalConstant.USER_HEADER, jwtUtil.getUsernameFromToken(token))
               .build();
       return chain.filter(exchange);
     };
