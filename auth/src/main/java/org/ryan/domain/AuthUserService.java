@@ -20,8 +20,7 @@ public class AuthUserService implements UserDetailsService {
   }
 
   @Override
-  public AuthUser loadUserByUsername(String username)
-      throws UsernameNotFoundException {
+  public AuthUser loadUserByUsername(String username) throws UsernameNotFoundException {
     UserDto userDto = userService.getUser(username);
     if (Objects.isNull(userDto)) {
       throw new SocialMonoException(ResponseCode.NOT_FOUND);

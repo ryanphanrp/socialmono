@@ -33,8 +33,16 @@ public class MinioController {
   @PostMapping("/upload-avatar")
   public ResponseDto<String> getPresignedUrlWithBucket(
       @RequestBody UploadAvatarDto dto
-  )
-      throws ServerException, InsufficientDataException, ErrorResponseException, IOException, NoSuchAlgorithmException, InvalidKeyException, InvalidResponseException, XmlParserException, InternalException {
+  ) throws
+      ServerException,
+      InsufficientDataException,
+      ErrorResponseException,
+      IOException,
+      NoSuchAlgorithmException,
+      InvalidKeyException,
+      InvalidResponseException,
+      XmlParserException,
+      InternalException {
     var presignedAvatarUrl = minioService.getPresignedAvatarUrl(dto.fileName());
     return ResponseDto.ok(presignedAvatarUrl);
   }
@@ -48,18 +56,18 @@ public class MinioController {
 
   private List<String> getImageUploadUrls(UploadMediaDto dto) {
     return dto.images()
-              .stream()
-              .map(fileName -> {
-                try {
-                  return minioService.getPresignedPostUrl(fileName);
-                } catch (ServerException | InvalidKeyException |
-                         InsufficientDataException | ErrorResponseException |
-                         IOException | NoSuchAlgorithmException |
-                         InvalidResponseException | XmlParserException |
-                         InternalException e) {
-                  throw new MediaServiceException(e.getMessage());
-                }
-              })
-              .toList();
+        .stream()
+        .map(fileName -> {
+          try {
+            return minioService.getPresignedPostUrl(fileName);
+          } catch (ServerException | InvalidKeyException |
+                   InsufficientDataException | ErrorResponseException |
+                   IOException | NoSuchAlgorithmException |
+                   InvalidResponseException | XmlParserException |
+                   InternalException e) {
+            throw new MediaServiceException(e.getMessage());
+          }
+        })
+        .toList();
   }
 }

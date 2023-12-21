@@ -15,12 +15,7 @@ public class JSONUtils {
     try {
       return objectMapper.readValue(json, clazz);
     } catch (Exception ex) {
-      log.error(
-          "Parse object of class {} failed, json: {}, reason: {}",
-          clazz.getName(),
-          json,
-          ex.getMessage()
-      );
+      log.error("Parse object of class {} failed, json: {}, reason: {}", clazz.getName(), json, ex.getMessage());
       return null;
     }
   }
@@ -30,7 +25,10 @@ public class JSONUtils {
       return objectMapper.readValue(json, typeReference);
     } catch (Exception ex) {
       log.error("Parse object of class {} failed, json: {}, reason: {}",
-          typeReference.getClass().getName(), json, ex.getMessage()
+                typeReference.getClass()
+                    .getName(),
+                json,
+                ex.getMessage()
       );
       return null;
     }
@@ -40,11 +38,10 @@ public class JSONUtils {
     try {
       return objectMapper.writeValueAsString(object);
     } catch (Exception ex) {
-      log.error(
-          "Stringify object of class {} failed, reason: {}",
-          object.getClass()
-                .getName(),
-          ex.getMessage()
+      log.error("Stringify object of class {} failed, reason: {}",
+                object.getClass()
+                    .getName(),
+                ex.getMessage()
       );
       return null;
     }

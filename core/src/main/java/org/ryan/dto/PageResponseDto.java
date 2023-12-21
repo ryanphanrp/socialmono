@@ -8,7 +8,11 @@ import org.springframework.data.domain.Page;
 @Builder
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public record PageResponseDto<T>(
-    Integer code, String message, Object reason, List<T> body, MetaDto meta
+    Integer code,
+    String message,
+    Object reason,
+    List<T> body,
+    MetaDto meta
 ) {
 
   public static <T> PageResponseDto<T> of(Integer code, String message, List<T> body, MetaDto meta) {

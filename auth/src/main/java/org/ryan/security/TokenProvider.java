@@ -37,17 +37,11 @@ public class TokenProvider {
   public String createToken(AuthUser authUserDetails) {
     Map<String, Object> extraClaims = new HashMap<>();
     extraClaims.put("userId", authUserDetails.getUserId());
-    return buildToken(extraClaims,
-                      authUserDetails.getUsername(),
-                      accessTokenExpiration
-    );
+    return buildToken(extraClaims, authUserDetails.getUsername(), accessTokenExpiration);
   }
 
   public String createRefreshToken(AuthUser authUserDetails) {
-    return buildToken(new HashMap<>(),
-                      authUserDetails.getUsername(),
-                      refreshTokenExpiration
-    );
+    return buildToken(new HashMap<>(), authUserDetails.getUsername(), refreshTokenExpiration);
   }
 
   private String buildToken(
@@ -56,13 +50,13 @@ public class TokenProvider {
     Date now = new Date();
     Date tokenExpiration = new Date(System.currentTimeMillis() + expiration);
     return Jwts.builder()
-               .setClaims(extraClaims)
-               .setId(username)
-               .setSubject(username)
-               .setIssuedAt(now)
-               .setExpiration(tokenExpiration)
-               .signWith(toSigningKey(), SignatureAlgorithm.HS512)
-               .compact();
+        .setClaims(extraClaims)
+        .setId(username)
+        .setSubject(username)
+        .setIssuedAt(now)
+        .setExpiration(tokenExpiration)
+        .signWith(toSigningKey(), SignatureAlgorithm.HS512)
+        .compact();
   }
 
   public String getUsernameFromToken(String token) {
@@ -92,7 +86,7 @@ public class TokenProvider {
   // get claims token
   private Claims getClaims(String token) {
     return makeJwtParser().parseClaimsJws(token)
-                          .getBody();
+        .getBody();
   }
 
   // extract claims from token
@@ -101,12 +95,11 @@ public class TokenProvider {
     return claimsResolver.apply(claims);
   }
 
-
   // Make JWT Parser
   private JwtParser makeJwtParser() {
     return Jwts.parserBuilder()
-               .setSigningKey(toSigningKey())
-               .build();
+        .setSigningKey(toSigningKey())
+        .build();
   }
 
   // Make Sign Key with HMAC

@@ -16,10 +16,10 @@ public record ResponseDto<T>(
 
   public static <T> ResponseDto<T> of(ResponseCode responseCode, T body) {
     return ResponseDto.<T>builder()
-                      .code(responseCode.getCode())
-                      .message(responseCode.getMessage())
-                      .body(body)
-                      .build();
+        .code(responseCode.getCode())
+        .message(responseCode.getMessage())
+        .body(body)
+        .build();
   }
 
   public static <T> ResponseDto<T> ok(T body) {
@@ -32,18 +32,17 @@ public record ResponseDto<T>(
 
   public static <T> ResponseEntity<ResponseDto<T>> error(ResponseCode responseCode) {
     return ResponseEntity.status(responseCode.getHttpStatus())
-                         .body(ResponseDto.of(responseCode, null));
+        .body(ResponseDto.of(responseCode, null));
   }
 
   public static <T> ResponseEntity<ResponseDto<T>> error(
-      ResponseCode responseCode,
-      String reason
+      ResponseCode responseCode, String reason
   ) {
     return ResponseEntity.status(responseCode.getHttpStatus())
-                         .body(ResponseDto.<T>builder()
-                                          .code(responseCode.getCode())
-                                          .message(responseCode.getMessage())
-                                          .reason(reason)
-                                          .build());
+        .body(ResponseDto.<T>builder()
+                  .code(responseCode.getCode())
+                  .message(responseCode.getMessage())
+                  .reason(reason)
+                  .build());
   }
 }

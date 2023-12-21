@@ -16,15 +16,15 @@ public class DateTimeUtil {
     if (Objects.isNull(time)) {
       return 0L;
     }
-    return time.atZone(ZoneId.of(ZONE_ID)).toEpochSecond();
+    return time.atZone(ZoneId.of(ZONE_ID))
+        .toEpochSecond();
   }
 
   public static Date fromNow(ChronoUnit chronoUnit, int amount) {
     return Date.from(LocalDateTime.now()
-                                  .plus(amount, chronoUnit)
-                                  .atZone(ZoneId.of(ZONE_ID))
-                                  .toInstant()
-    );
+                         .plus(amount, chronoUnit)
+                         .atZone(ZoneId.of(ZONE_ID))
+                         .toInstant());
   }
 
   public static Date fromNow(ChronoUnit chronoUnit) {

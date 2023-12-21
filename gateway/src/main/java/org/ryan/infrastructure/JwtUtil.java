@@ -31,13 +31,13 @@ public class JwtUtil {
   public Object getUserIdFromToken(String token) {
     Claims claims = getClaims(token);
     return Optional.ofNullable(claims.get("userId"))
-                   .orElseThrow(() -> new SocialMonoException(ResponseCode.NOT_FOUND));
+        .orElseThrow(() -> new SocialMonoException(ResponseCode.NOT_FOUND));
   }
 
   public boolean isValid(String token) {
-      if (Objects.isNull(token)) {
-          return false;
-      }
+    if (Objects.isNull(token)) {
+      return false;
+    }
 
     try {
       makeJwtParser().parseClaimsJws(token);
@@ -57,7 +57,7 @@ public class JwtUtil {
   // get claims token
   private Claims getClaims(String token) {
     return makeJwtParser().parseClaimsJws(token)
-                          .getBody();
+        .getBody();
   }
 
   // extract claims from token
@@ -66,12 +66,11 @@ public class JwtUtil {
     return claimsResolver.apply(claims);
   }
 
-
   // Make JWT Parser
   private JwtParser makeJwtParser() {
     return Jwts.parserBuilder()
-               .setSigningKey(toSigningKey())
-               .build();
+        .setSigningKey(toSigningKey())
+        .build();
   }
 
   // Make Sign Key with HMAC

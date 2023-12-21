@@ -5,7 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.ryan.application.dto.PostCreateDto;
 import org.ryan.application.dto.PostDetailDto;
 import org.ryan.application.dto.PostDto;
-import org.ryan.exception.customize.CustomNotFoundException;
+import org.ryan.exception.customize.MonoNotFoundException;
 import org.ryan.infrastruture.middleware.MessageHandler;
 import org.ryan.infrastruture.middleware.MessageSender;
 import org.springframework.stereotype.Service;
@@ -20,7 +20,7 @@ public class PostService {
 
   public PostDto getPost(Long postId) {
     Post post = postDao.findPostByPostId(postId)
-                       .orElseThrow(CustomNotFoundException::new);
+        .orElseThrow(MonoNotFoundException::new);
     return PostDto.of(post);
   }
 
@@ -32,14 +32,14 @@ public class PostService {
 
   public List<PostDto> getPosts() {
     return postDao.findAll()
-                  .stream()
-                  .map(PostDto::of)
-                  .toList();
+        .stream()
+        .map(PostDto::of)
+        .toList();
   }
 
   public PostDetailDto getDetailPost(Long postId) {
     Post post = postDao.findPostByPostId(postId)
-                       .orElseThrow(CustomNotFoundException::new);
+        .orElseThrow(MonoNotFoundException::new);
     var userDto = messageSender.getUserDto(post.getUserId());
     return PostDetailDto.of(PostDto.of(post), userDto);
   }

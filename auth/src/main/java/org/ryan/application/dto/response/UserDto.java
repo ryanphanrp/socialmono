@@ -10,11 +10,6 @@ public record UserDto(
 ) {
 
   public static UserDto of(UserRPCDto dto) {
-    return new UserDto(
-        dto.userId(),
-        dto.username(),
-        dto.email(),
-        dto.password()
-    );
+    return new UserDto(dto.userId(), dto.username(), dto.email(), dto.password());
   }
 }

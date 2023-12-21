@@ -9,7 +9,7 @@ import org.ryan.constant.ResponseCode;
 import org.ryan.dto.RpcResponse;
 import org.ryan.dto.shared.UserRPCDto;
 import org.ryan.exception.SocialMonoException;
-import org.ryan.exception.customize.CustomNotFoundException;
+import org.ryan.exception.customize.MonoNotFoundException;
 import org.springframework.amqp.rabbit.connection.CorrelationData;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.core.ParameterizedTypeReference;
@@ -24,22 +24,22 @@ public class MessageSender {
 
   public UserRPCDto getUserDetailRPC(String request) {
     log.info("Sending message - user detail: {}", request);
-    CorrelationData correlationData = new CorrelationData(UUID.randomUUID().toString());
-    RpcResponse<UserRPCDto> response = rabbitTemplate.convertSendAndReceiveAsType(
-        RabbitMessage.DIRECT_EXCHANGE,
-        RabbitMessage.AUTH_ROUTING_KEY,
-        request,
-        correlationData,
-        new ParameterizedTypeReference<>() {
-        }
+    CorrelationData correlationData = new CorrelationData(UUID.randomUUID()
+                                                              .toString());
+    RpcResponse<UserRPCDto> response = rabbitTemplate.convertSendAndReceiveAsType(RabbitMessage.DIRECT_EXCHANGE,
+                                                                                  RabbitMessage.AUTH_ROUTING_KEY,
+                                                                                  request,
+                                                                                  correlationData,
+                                                                                  new ParameterizedTypeReference<>() {}
     );
     return Optional.ofNullable(response)
-                   .map(user -> {
-                     if (user.isError()) {
-                       throw new CustomNotFoundException(user.message());
-                     }
-                     return user.body();
-                   }).orElseThrow(() -> new SocialMonoException(ResponseCode.BAD_REQUEST));
+        .map(user -> {
+          if (user.isError()) {
+            throw new MonoNotFoundException(user.message());
+          }
+          return user.body();
+        })
+        .orElseThrow(() -> new SocialMonoException(ResponseCode.BAD_REQUEST));
   }
 
   public Long sendCreateUser(Object request) {
@@ -50,6 +50,6 @@ public class MessageSender {
         request
     );
     return Optional.ofNullable(response)
-                   .orElseThrow(() -> new SocialMonoException(ResponseCode.BAD_REQUEST));
+        .orElseThrow(() -> new SocialMonoException(ResponseCode.BAD_REQUEST));
   }
 }

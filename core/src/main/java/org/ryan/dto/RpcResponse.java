@@ -5,8 +5,11 @@ import java.io.Serializable;
 import org.ryan.constant.ResponseCode;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public record RpcResponse<T>(Boolean status, String message, T body) implements
-    Serializable {
+public record RpcResponse<T>(
+    Boolean status,
+    String message,
+    T body
+) implements Serializable {
 
   public static <T> RpcResponse<T> of(Boolean status, String message, T body) {
     return new RpcResponse<>(status, message, body);

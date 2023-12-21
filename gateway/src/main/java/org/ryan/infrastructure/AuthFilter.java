@@ -19,7 +19,6 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
-
 @Slf4j
 @Component
 @RequiredArgsConstructor
@@ -43,10 +42,10 @@ public class AuthFilter extends AbstractGatewayFilterFactory<Object> {
         return onError(exchange, ResponseCode.FORBIDDEN);
       }
       exchange.getRequest()
-              .mutate()
-              .header(GlobalConstant.USER_ID_HEADER, jwtUtil.getUserIdFromToken(token).toString())
-              .header(GlobalConstant.USER_HEADER, jwtUtil.getUsernameFromToken(token))
-              .build();
+          .mutate()
+          .header(GlobalConstant.USER_ID_HEADER, jwtUtil.getUserIdFromToken(token).toString())
+          .header(GlobalConstant.USER_HEADER, jwtUtil.getUsernameFromToken(token))
+          .build();
       return chain.filter(exchange);
     };
   }
@@ -56,21 +55,25 @@ public class AuthFilter extends AbstractGatewayFilterFactory<Object> {
   ) {
     ServerHttpResponse response = exchange.getResponse();
     response.setStatusCode(responseCode.getHttpStatus());
-    response.getHeaders().setContentType(MediaType.APPLICATION_JSON);
-    String content = Optional.ofNullable(JSONUtils.stringify(ResponseDto.error(responseCode)))
-                             .orElse("");
+    response.getHeaders()
+        .setContentType(MediaType.APPLICATION_JSON);
+    String content =
+        Optional.ofNullable(JSONUtils.stringify(ResponseDto.error(responseCode)))
+            .orElse("");
     return response.writeWith(Mono.just(content)
                                   .map(b -> response.bufferFactory()
-                                                    .wrap(b.getBytes(StandardCharsets.UTF_8))
-                                  ));
+                                      .wrap(b.getBytes(StandardCharsets.UTF_8))));
   }
 
   private boolean hasAuthorization(ServerHttpRequest request) {
-    return request.getHeaders().containsKey(HttpHeaders.AUTHORIZATION);
+    return request.getHeaders()
+        .containsKey(HttpHeaders.AUTHORIZATION);
   }
 
   private String getAuthToken(ServerHttpRequest request) {
-    var header = request.getHeaders().getOrEmpty(HttpHeaders.AUTHORIZATION).get(0);
+    var header = request.getHeaders()
+        .getOrEmpty(HttpHeaders.AUTHORIZATION)
+        .get(0);
     if (StringUtils.hasText(header)) {
       return header.startsWith(AUTH_KEY) ? header.substring(7) : header;
     }

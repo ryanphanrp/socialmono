@@ -21,8 +21,8 @@ public class PasswordUtil {
   public static String generatePassword(long length) {
     SecureRandom random = new SecureRandom();
     return random.ints(length, 0, BASE.length())
-                 .mapToObj(BASE::charAt)
-                 .map(Object::toString)
-                 .collect(Collectors.joining());
+        .mapToObj(BASE::charAt)
+        .map(Object::toString)
+        .collect(Collectors.joining());
   }
 }

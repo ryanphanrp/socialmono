@@ -8,7 +8,7 @@ import org.ryan.application.dto.response.UserDetailDto;
 import org.ryan.domain.constant.UserStatus;
 import org.ryan.domain.dao.UserDao;
 import org.ryan.domain.entity.User;
-import org.ryan.exception.customize.CustomNotFoundException;
+import org.ryan.exception.customize.MonoNotFoundException;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
@@ -23,7 +23,7 @@ public class UserService {
   @Cacheable(cacheNames = "user", key = "#username")
   public UserDetailDto getUser(String username) {
     User user = userDao.findUserByUsername(username)
-                       .orElseThrow(CustomNotFoundException::new);
+                       .orElseThrow(MonoNotFoundException::new);
     return UserDetailDto.of(user);
   }
 
@@ -42,7 +42,7 @@ public class UserService {
   @CachePut(cacheNames = "users_update", key = "#username")
   public void activateUserBy(String username) {
     User user = userDao.findUserByUsername(username)
-                       .orElseThrow(CustomNotFoundException::new);
+                       .orElseThrow(MonoNotFoundException::new);
     user.setStatus(UserStatus.ACTIVE);
     userDao.save(user);
   }

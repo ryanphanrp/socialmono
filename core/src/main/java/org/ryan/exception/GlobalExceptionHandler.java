@@ -5,7 +5,7 @@ import java.sql.SQLException;
 import lombok.extern.slf4j.Slf4j;
 import org.ryan.constant.ResponseCode;
 import org.ryan.dto.ResponseDto;
-import org.ryan.exception.customize.CustomNotFoundException;
+import org.ryan.exception.customize.MonoNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -26,8 +26,8 @@ public class GlobalExceptionHandler {
 
   @ResponseBody
   @ResponseStatus(HttpStatus.NOT_FOUND)
-  @ExceptionHandler({CustomNotFoundException.class})
-  public ResponseEntity<ResponseDto<Object>> handleNotFound(HttpServletRequest req, CustomNotFoundException exp) {
+  @ExceptionHandler({MonoNotFoundException.class})
+  public ResponseEntity<ResponseDto<Object>> handleNotFound(HttpServletRequest req, MonoNotFoundException exp) {
     log.error("[NotFoundException]: {} - {}", req.getRequestURI(), exp.getMessage());
     return ResponseDto.error(exp.getResponseCode());
   }

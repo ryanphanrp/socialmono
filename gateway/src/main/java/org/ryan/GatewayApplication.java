@@ -18,7 +18,7 @@ public class GatewayApplication {
   @Bean
   public RouteLocator customRouteLocator(RouteLocatorBuilder builder) {
     return builder.routes()
-                  .route("whitelist_route", r -> r.path("/auth/**").uri("lb://auth-service"))
-                  .build();
+        .route("whitelist_route", r -> r.path("/auth/**").uri("lb://auth-service"))
+        .build();
   }
 }

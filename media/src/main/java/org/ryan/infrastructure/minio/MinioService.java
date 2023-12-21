@@ -36,33 +36,57 @@ public class MinioService {
     this.minioClient = minioClient;
   }
 
-  public String generatePresignedUrl(String fileName, String bucket)
-      throws ServerException, InsufficientDataException, ErrorResponseException, IOException, NoSuchAlgorithmException, InvalidKeyException, InvalidResponseException, XmlParserException, InternalException {
+  public String generatePresignedUrl(String fileName, String bucket) throws
+      ServerException,
+      InsufficientDataException,
+      ErrorResponseException,
+      IOException,
+      NoSuchAlgorithmException,
+      InvalidKeyException,
+      InvalidResponseException,
+      XmlParserException,
+      InternalException {
     log.info("File name: {}", fileName);
     var bucketArgs = BucketExistsArgs.builder()
-                                     .bucket(bucket)
-                                     .build();
+        .bucket(bucket)
+        .build();
     if (!minioClient.bucketExists(bucketArgs)) {
       throw new BucketNotFoundException(bucket);
     }
     var params = Map.of("response-content-type", "application/json");
     var args = GetPresignedObjectUrlArgs.builder()
-                                        .method(Method.PUT)
-                                        .bucket(bucket)
-                                        .object(fileName)
-                                        .expiry(2, TimeUnit.HOURS)
-                                        .extraQueryParams(params)
-                                        .build();
+        .method(Method.PUT)
+        .bucket(bucket)
+        .object(fileName)
+        .expiry(2, TimeUnit.HOURS)
+        .extraQueryParams(params)
+        .build();
     return minioClient.getPresignedObjectUrl(args);
   }
 
-  public String getPresignedAvatarUrl(String fileName)
-      throws ServerException, InsufficientDataException, ErrorResponseException, IOException, NoSuchAlgorithmException, InvalidKeyException, InvalidResponseException, XmlParserException, InternalException {
+  public String getPresignedAvatarUrl(String fileName) throws
+      ServerException,
+      InsufficientDataException,
+      ErrorResponseException,
+      IOException,
+      NoSuchAlgorithmException,
+      InvalidKeyException,
+      InvalidResponseException,
+      XmlParserException,
+      InternalException {
     return generatePresignedUrl(fileName, avatarBucket);
   }
 
-  public String getPresignedPostUrl(String fileName)
-      throws ServerException, InsufficientDataException, ErrorResponseException, IOException, NoSuchAlgorithmException, InvalidKeyException, InvalidResponseException, XmlParserException, InternalException {
+  public String getPresignedPostUrl(String fileName) throws
+      ServerException,
+      InsufficientDataException,
+      ErrorResponseException,
+      IOException,
+      NoSuchAlgorithmException,
+      InvalidKeyException,
+      InvalidResponseException,
+      XmlParserException,
+      InternalException {
     return generatePresignedUrl(fileName, postBucket);
   }
 }

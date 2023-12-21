@@ -15,8 +15,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public interface UserInfoAPI {
 
   @PostMapping
-  ResponseDto<Object> createUserInfo(@RequestHeader(GlobalConstant.USER_HEADER) String username,
-      @RequestBody UserInfoCreateDto dto);
+  ResponseDto<Object> createUserInfo(
+      @RequestHeader(GlobalConstant.USER_HEADER) String username,
+      @RequestBody UserInfoCreateDto dto
+  );
 
   @GetMapping("/{username}")
   ResponseDto<UserDetail> getUserDetail(@PathVariable String username);

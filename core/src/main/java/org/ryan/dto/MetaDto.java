@@ -19,20 +19,10 @@ public record MetaDto(
   }
 
   public static MetaDto of(Pageable pageRequest) {
-    return new MetaDto(
-        pageRequest.getPageNumber(),
-        pageRequest.getPageSize(),
-        null,
-        null
-    );
+    return new MetaDto(pageRequest.getPageNumber(), pageRequest.getPageSize(), null, null);
   }
 
   public static <T> MetaDto fromPage(Page<T> page) {
-    return new MetaDto(
-        page.getNumber(),
-        page.getSize(),
-        page.getTotalPages(),
-        page.getTotalElements()
-    );
+    return new MetaDto(page.getNumber(), page.getSize(), page.getTotalPages(), page.getTotalElements());
   }
 }

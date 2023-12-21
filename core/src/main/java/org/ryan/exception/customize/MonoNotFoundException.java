@@ -6,13 +6,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ResponseStatus(HttpStatus.NOT_FOUND)
-public class CustomNotFoundException extends SocialMonoException {
+public class MonoNotFoundException extends SocialMonoException {
 
-  public CustomNotFoundException() {
+  public MonoNotFoundException() {
     super(ResponseCode.NOT_FOUND);
   }
 
-  public CustomNotFoundException(String message) {
+  public MonoNotFoundException(String message) {
     super(ResponseCode.NOT_FOUND, message);
   }
 }

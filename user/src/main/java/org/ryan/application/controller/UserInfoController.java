@@ -20,9 +20,10 @@ public class UserInfoController implements UserInfoAPI {
   final UserInfoService userInfoService;
 
   public ResponseDto<Object> createUserInfo(
-      @RequestHeader(GlobalConstant.USER_HEADER) String username, @RequestBody UserInfoCreateDto dto
+      @RequestHeader(GlobalConstant.USER_HEADER) String username,
+      @RequestBody UserInfoCreateDto userInfoCreateDto
   ) {
-    return ResponseDto.ok(userInfoService.createUserInfo(username, dto));
+    return ResponseDto.ok(userInfoService.createUserInfo(username, userInfoCreateDto));
   }
 
   public ResponseDto<UserDetail> getUserDetail(@PathVariable String username) {

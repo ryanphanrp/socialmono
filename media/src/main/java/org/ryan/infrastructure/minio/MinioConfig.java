@@ -22,8 +22,8 @@ public class MinioConfig {
   @Primary
   public MinioClient minioClient() {
     return MinioClient.builder()
-                      .endpoint(endpoint)
-                      .credentials(accessKey, secretKey)
-                      .build();
+        .endpoint(endpoint)
+        .credentials(accessKey, secretKey)
+        .build();
   }
 }
