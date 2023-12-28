@@ -2,7 +2,7 @@ package org.ryan.domain;
 
 import java.util.Objects;
 import org.ryan.application.dto.response.UserDto;
-import org.ryan.constant.ResponseCode;
+import org.ryan.constant.CoreResponseCode;
 import org.ryan.exception.SocialMonoException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -23,7 +23,7 @@ public class AuthUserService implements UserDetailsService {
   public AuthUser loadUserByUsername(String username) throws UsernameNotFoundException {
     UserDto userDto = userService.getUser(username);
     if (Objects.isNull(userDto)) {
-      throw new SocialMonoException(ResponseCode.NOT_FOUND);
+      throw new SocialMonoException(CoreResponseCode.NOT_FOUND);
     }
     return AuthUser.of(userDto);
   }

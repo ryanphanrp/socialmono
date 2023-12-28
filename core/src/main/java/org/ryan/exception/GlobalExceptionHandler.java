@@ -3,7 +3,7 @@ package org.ryan.exception;
 import jakarta.servlet.http.HttpServletRequest;
 import java.sql.SQLException;
 import lombok.extern.slf4j.Slf4j;
-import org.ryan.constant.ResponseCode;
+import org.ryan.constant.CoreResponseCode;
 import org.ryan.dto.ResponseDto;
 import org.ryan.exception.customize.MonoNotFoundException;
 import org.springframework.http.HttpStatus;
@@ -21,7 +21,7 @@ public class GlobalExceptionHandler {
   @ExceptionHandler({SocialMonoException.class})
   public ResponseEntity<ResponseDto<Object>> globalAppHandler(HttpServletRequest req, SocialMonoException exp) {
     log.error("[GlobalAppException]: {} - {}", req.getRequestURI(), exp.getMessage());
-    return ResponseDto.error(exp.getResponseCode());
+    return ResponseDto.error(exp.getResponseCode(), exp.getStatus());
   }
 
   @ResponseBody
@@ -29,7 +29,7 @@ public class GlobalExceptionHandler {
   @ExceptionHandler({MonoNotFoundException.class})
   public ResponseEntity<ResponseDto<Object>> handleNotFound(HttpServletRequest req, MonoNotFoundException exp) {
     log.error("[NotFoundException]: {} - {}", req.getRequestURI(), exp.getMessage());
-    return ResponseDto.error(exp.getResponseCode());
+    return ResponseDto.error(exp.getResponseCode(), exp.getStatus());
   }
 
   @ResponseBody
@@ -37,6 +37,6 @@ public class GlobalExceptionHandler {
   @ExceptionHandler({Exception.class, SQLException.class})
   public ResponseEntity<ResponseDto<Object>> handleUncaughtException(Exception exp) {
     log.error("[InternalServerException]: {}", exp.getMessage());
-    return ResponseDto.error(ResponseCode.INTERNAL_ERROR, exp.getMessage());
+    return ResponseDto.error(CoreResponseCode.INTERNAL_ERROR, exp.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
   }
 }

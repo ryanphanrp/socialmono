@@ -1,5 +1,6 @@
 package org.ryan.exception.customize;
 
+import org.ryan.constant.CoreResponseCode;
 import org.ryan.constant.ResponseCode;
 import org.ryan.exception.SocialMonoException;
 import org.springframework.http.HttpStatus;
@@ -9,10 +10,14 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 public class MonoBadRequestException extends SocialMonoException {
 
   public MonoBadRequestException() {
-    super(ResponseCode.NOT_FOUND);
+    super(CoreResponseCode.BAD_REQUEST);
   }
 
   public MonoBadRequestException(String message) {
-    super(ResponseCode.NOT_FOUND, message);
+    super(CoreResponseCode.NOT_FOUND, message, HttpStatus.BAD_REQUEST);
+  }
+
+  public MonoBadRequestException(ResponseCode code) {
+    super(code, code.getMessage(), HttpStatus.BAD_REQUEST);
   }
 }

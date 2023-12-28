@@ -2,7 +2,9 @@ package org.ryan.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Builder;
+import org.ryan.constant.CoreResponseCode;
 import org.ryan.constant.ResponseCode;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 @Builder
@@ -23,22 +25,21 @@ public record ResponseDto<T>(
   }
 
   public static <T> ResponseDto<T> ok(T body) {
-    return ResponseDto.of(ResponseCode.OK, body);
+    return ResponseDto.of(CoreResponseCode.OK, body);
   }
 
   public static <T> ResponseDto<T> ok() {
     return ResponseDto.ok(null);
   }
 
-  public static <T> ResponseEntity<ResponseDto<T>> error(ResponseCode responseCode) {
-    return ResponseEntity.status(responseCode.getHttpStatus())
+  public static <T> ResponseEntity<ResponseDto<T>> error(ResponseCode responseCode, HttpStatus status) {
+    return ResponseEntity.status(status)
         .body(ResponseDto.of(responseCode, null));
   }
 
   public static <T> ResponseEntity<ResponseDto<T>> error(
-      ResponseCode responseCode, String reason
-  ) {
-    return ResponseEntity.status(responseCode.getHttpStatus())
+      ResponseCode responseCode, String reason, HttpStatus status) {
+    return ResponseEntity.status(status)
         .body(ResponseDto.<T>builder()
                   .code(responseCode.getCode())
                   .message(responseCode.getMessage())

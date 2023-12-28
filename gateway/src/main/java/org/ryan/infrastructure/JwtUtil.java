@@ -12,7 +12,7 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Function;
 import lombok.extern.slf4j.Slf4j;
-import org.ryan.constant.ResponseCode;
+import org.ryan.constant.CoreResponseCode;
 import org.ryan.exception.SocialMonoException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -31,7 +31,7 @@ public class JwtUtil {
   public Object getUserIdFromToken(String token) {
     Claims claims = getClaims(token);
     return Optional.ofNullable(claims.get("userId"))
-        .orElseThrow(() -> new SocialMonoException(ResponseCode.NOT_FOUND));
+        .orElseThrow(() -> new SocialMonoException(CoreResponseCode.NOT_FOUND));
   }
 
   public boolean isValid(String token) {

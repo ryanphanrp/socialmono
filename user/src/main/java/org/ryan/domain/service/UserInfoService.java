@@ -2,7 +2,7 @@ package org.ryan.domain.service;
 
 import lombok.RequiredArgsConstructor;
 import org.ryan.application.dto.request.UserInfoCreateDto;
-import org.ryan.constant.ResponseCode;
+import org.ryan.constant.CoreResponseCode;
 import org.ryan.domain.dao.UserDetailDao;
 import org.ryan.domain.dao.UserInfoDao;
 import org.ryan.domain.entity.UserInfo;
@@ -22,7 +22,7 @@ public class UserInfoService {
   public Long createUserInfo(String username, UserInfoCreateDto dto) {
     // TODO: need to validate by Spring Security
     if (!userService.validateUserId(username, dto.userId())) {
-      throw new SocialMonoException(ResponseCode.FORBIDDEN);
+      throw new SocialMonoException(CoreResponseCode.FORBIDDEN);
     }
     UserInfo userInfo = dto.toEntity();
     return userInfoDao.save(userInfo).getUserInfoId();
@@ -31,6 +31,6 @@ public class UserInfoService {
   @Cacheable(cacheNames = "user_info", key = "#username")
   public UserDetail getUserInfoDetail(String username) {
     return userDetailDao.findUserInfoByUsername(username)
-                        .orElseThrow(() -> new SocialMonoException(ResponseCode.NOT_FOUND));
+                        .orElseThrow(() -> new SocialMonoException(CoreResponseCode.NOT_FOUND));
   }
 }

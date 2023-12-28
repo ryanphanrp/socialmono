@@ -6,9 +6,10 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 import lombok.extern.slf4j.Slf4j;
-import org.ryan.constant.ResponseCode;
+import org.ryan.constant.CoreResponseCode;
 import org.ryan.dto.ResponseDto;
 import org.ryan.utils.JSONUtils;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.stereotype.Component;
@@ -27,7 +28,7 @@ public class AuthEntryPoint implements AuthenticationEntryPoint {
     response.setCharacterEncoding("UTF-8");
 
     final PrintWriter out = response.getWriter();
-    out.print(JSONUtils.stringify(ResponseDto.error(ResponseCode.UNAUTHORIZED)));
+    out.print(JSONUtils.stringify(ResponseDto.error(CoreResponseCode.UNAUTHORIZED, HttpStatus.UNAUTHORIZED)));
     out.flush();
   }
 }

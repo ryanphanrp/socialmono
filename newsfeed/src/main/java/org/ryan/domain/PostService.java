@@ -6,6 +6,7 @@ import org.ryan.application.dto.PostCreateDto;
 import org.ryan.application.dto.PostDetailDto;
 import org.ryan.application.dto.PostDto;
 import org.ryan.exception.customize.MonoNotFoundException;
+import org.ryan.infrastruture.constant.NewsFeedResponseCode;
 import org.ryan.infrastruture.middleware.MessageHandler;
 import org.ryan.infrastruture.middleware.MessageSender;
 import org.springframework.stereotype.Service;
@@ -20,7 +21,7 @@ public class PostService {
 
   public PostDto getPost(Long postId) {
     Post post = postDao.findPostByPostId(postId)
-        .orElseThrow(MonoNotFoundException::new);
+        .orElseThrow(() -> new MonoNotFoundException(NewsFeedResponseCode.POST_NOT_FOUND));
     return PostDto.of(post);
   }
 
@@ -39,7 +40,7 @@ public class PostService {
 
   public PostDetailDto getDetailPost(Long postId) {
     Post post = postDao.findPostByPostId(postId)
-        .orElseThrow(MonoNotFoundException::new);
+        .orElseThrow(() -> new MonoNotFoundException(NewsFeedResponseCode.POST_NOT_FOUND));
     var userDto = messageSender.getUserDto(post.getUserId());
     return PostDetailDto.of(PostDto.of(post), userDto);
   }

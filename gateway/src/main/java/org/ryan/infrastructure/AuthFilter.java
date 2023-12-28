@@ -5,12 +5,13 @@ import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.ryan.constant.GlobalConstant;
-import org.ryan.constant.ResponseCode;
+import org.ryan.constant.CoreResponseCode;
 import org.ryan.dto.ResponseDto;
 import org.ryan.utils.JSONUtils;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFactory;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.http.server.reactive.ServerHttpResponse;
@@ -34,12 +35,12 @@ public class AuthFilter extends AbstractGatewayFilterFactory<Object> {
       ServerHttpRequest request = exchange.getRequest();
       if (!hasAuthorization(request)) {
         log.error("[Unauthorized]: No Token");
-        return onError(exchange, ResponseCode.UNAUTHORIZED);
+        return onError(exchange, CoreResponseCode.UNAUTHORIZED);
       }
       var token = getAuthToken(request);
       if (!jwtUtil.isValid(token)) {
         log.error("[Unauthorized]: Invalid Token");
-        return onError(exchange, ResponseCode.FORBIDDEN);
+        return onError(exchange, CoreResponseCode.FORBIDDEN);
       }
       exchange.getRequest()
           .mutate()
@@ -51,18 +52,16 @@ public class AuthFilter extends AbstractGatewayFilterFactory<Object> {
   }
 
   private Mono<Void> onError(
-      ServerWebExchange exchange, ResponseCode responseCode
+      ServerWebExchange exchange, CoreResponseCode responseCode
   ) {
     ServerHttpResponse response = exchange.getResponse();
-    response.setStatusCode(responseCode.getHttpStatus());
+    response.setStatusCode(HttpStatus.INTERNAL_SERVER_ERROR);
     response.getHeaders()
         .setContentType(MediaType.APPLICATION_JSON);
-    String content =
-        Optional.ofNullable(JSONUtils.stringify(ResponseDto.error(responseCode)))
+    String content = Optional.ofNullable(JSONUtils.stringify(ResponseDto.error(responseCode, HttpStatus.INTERNAL_SERVER_ERROR)))
             .orElse("");
-    return response.writeWith(Mono.just(content)
-                                  .map(b -> response.bufferFactory()
-                                      .wrap(b.getBytes(StandardCharsets.UTF_8))));
+    return response.writeWith(Mono.just(content).map(b -> response.bufferFactory()
+        .wrap(b.getBytes(StandardCharsets.UTF_8))));
   }
 
   private boolean hasAuthorization(ServerHttpRequest request) {
